@@ -18,5 +18,5 @@ socketServer.on('connection', ws => {
 })
 
 server.listen(process.env.PORT || 3000, () => {
-  console.log(`WE'RE LIVE! ${server.address().port}`)
+  console.log(`PORT ${server.address().port} WE'RE LIVE!`)
 })
