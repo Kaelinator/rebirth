@@ -20,4 +20,15 @@ class Sprite {
   animate(){
     this.index += this.speed
   }
+
+  setPos(x, y){
+    this.x = x
+    this.y = y
+  }
+
+  movePos(deltaX, deltaY){
+    this.x += deltaX
+    this.y += deltaY
+  }
+
 }
