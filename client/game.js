@@ -52,6 +52,7 @@ function setup() {
   createCanvas(window.innerWidth, window.innerHeight)
   noStroke()
   fill(255)
+  textAlign(CENTER)
 }
 
 function draw() {
@@ -86,9 +87,9 @@ const sendInputs = socket => {
 }
 
 const drawPlayer = (player) => {
-  // console.log(player.position)
-  // console.log(player.velocity)
-  ellipse(player.position.x, player.position.y, 10)
+  const {name, position} = player
+  text(name, position.x, position.y - 20)
+  ellipse(position.x, position.y, 10)
 }
 
 const handleEnvironmentChange = ({ data }) => {
