@@ -1,32 +1,42 @@
 
+var Vector = require('vector').Vector
+
 const JUMP_SPEED = 1
 const FALL_SPEED = 10
-
-const update = player => {
-  // Velocity changes according to acceleration
-  player.velocity.add(player.acceleration)
-  // position changes by velocity
-  player.position.add(player.velocity)
-  // We must clear acceleration each frame
-  player.acceleration.mult(0)
-}
+const RUN_SPEED = 10
+const JUMP_TICK_LIMIT = 1000
 
 const updatePos = player => {
-  update(player)
-
-  if (player.isJumping) {
-    player.velocity.y = JUMP_SPEED
+  player.position.add(player.velocity)
+  
+  if(player.isJumping){
+    if(player.curJumpTick <= JUMP_TICK_LIMIT) {
+      player.curJumpTick += 1
+      player.velocity.y = -JUMP_SPEED
+    } else {
+      player.usedOneJump = true
+      player.velocity.y = FALL_SPEED
+    }
   } else {
-    player.acceleration = { x: 0, y: FALL_SPEED }
+    player.usedOneJump = true
+    player.curJumpTick = 0
+    player.velocity.y = FALL_SPEED
   }
-
-  return player
-}
+  
+  if(player.isStrafingLeft || player.isStrafingRight && player.isStrafingLeft != player.isStrafingRight ) {
+    player.velocity.x = RUN_SPEED * player.isStrafingLeft ? 1 : -1
+  } else {
+    player.velocity.x = 0
+  }
+    
+}  
 
 const createPlayer = () => ({
-  position: { x: 0, y: 0 },
-  velocity: { x: 0, y: 0 },
-  acceleration: { x: 0, y: 0 },
+  position: new Vector(0, 0),
+  velocity: new Vector(0, 0),
+  curJumpTick: 0,
+  usedOneJump: false,
+  isGrounded: false
 })
 
 
