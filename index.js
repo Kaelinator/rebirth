@@ -1,13 +1,15 @@
-const path = require("path");
-const express = require("express");
-const app = express();
+const express = require('express')
+const WebSocket = require('ws')
+const http = require('http')
+const app = express()
+const path = require("path")
 
 app.use("/", express.static(path.join(__dirname, "client")));
 
-// app.get("/", (req, res) => {
-//   res.send("Testing");
-// });
+const server = http.createServer(app)
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log('this is my change')
+const socketServer = new WebSocket.Server({ server });
+
+server.listen(process.env.PORT || 3000, () => {
+  console.log(`WE'RE LIVE! ${server.address().port}`)
 })
