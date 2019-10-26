@@ -1,8 +1,12 @@
 
 const WebSocket = require('ws')
 const uuid = require('uuid/v4')
+var Vector = require('vector').Vector
+
 const JUMP_SPEED = 1
 const FALL_SPEED = 10
+const RUN_SPEED = 10
+const JUMP_TICK_LIMIT = 1000
 
 const data = {
   players: {},
@@ -18,9 +22,10 @@ const configureWebSockets = server => {
 
     ws.id = uuid()
     players[ws.id] = {
-      position = createVector(x, y),
-      velocity = createVector(0, 0),
-      acceleration = createVector(0, 0),
+      position: new Vector(0, 0),
+      velocity: new Vector(0, 0),
+      acceleration: new Vector(0, 0),
+      curJumpTick: 0,
     }
     console.log(`new user: ${ws.id}`)
 
@@ -45,14 +50,20 @@ const startGameLoop = interval => {
 }
 
 const updatePos = player => {
-  update(player);
+  update(player)
   
-  if(player.isJumping) {
-    player.velocity.y = JUMP_SPEED;
+  if(player.isJumping && player.curJumpTick < JUMP_TICK_LIMIT) {
+    player.curJumpTick += 1
+    player.velocity.y = -JUMP_SPEED
   } else {
-    player.acceleration.add(createVector(0, FALL_SPEED)); 
+    player.curJumpTick = 0
+    player.acceleration.add(new Vector(0, FALL_SPEED)) 
   }
-  
+
+  if(player.isStrafingLeft || player.isStrafingRight && player.isStrafingLeft != player.isStrafingRight ) {
+    player.velocity.x = RUN_SPEED * player.isStrafingLeft ? 1 : -1
+  }
+
   //   player.y = updateY(player)
   // }
   // if(player.strafeRight) {
@@ -60,16 +71,15 @@ const updatePos = player => {
   // } else if ()
 
 }
-return player;
 
 const update = player =>  {
   // Velocity changes according to acceleration
-  player.velocity.add(player.acceleration);
+  player.velocity.add(player.acceleration)
   // position changes by velocity
-  player.position.add(player.velocity);
+  player.position.add(player.velocity)
   // We must clear acceleration each frame
-  player.acceleration.mult(0);
-};
+  player.acceleration.mult(0)
+}
 
 
 // const updateY = player => {
