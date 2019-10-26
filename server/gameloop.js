@@ -1,7 +1,7 @@
 
 const WebSocket = require('ws')
 const uuid = require('uuid/v4')
-const { createPlayer } = require('./player')
+const { createPlayer, updatePos } = require('./player')
 
 const data = {
   players: {},
@@ -20,7 +20,6 @@ const configureWebSockets = server => {
     console.log(`created user: ${ws.id}`)
 
     ws.on('message', message => {
-      console.log(`recieved ${message}`)
       players[ws.id].movement = JSON.parse(message)
     })
 
@@ -36,7 +35,7 @@ const startGameLoop = interval => {
   setInterval(() => {
     const updated = Object
       .values(players)
-      // .map(updatePos)
+      .map(updatePos)
 
     emitToAll(socketServer, updated)
   }, interval)

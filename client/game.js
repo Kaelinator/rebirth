@@ -48,13 +48,14 @@ function preload() {
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight)
-  background(51)
   noStroke()
   fill(255)
 }
 
 function draw() {
   if (!connection.connected) return
+
+  background(51)
 
   text('Connected', 0, 32)
 
