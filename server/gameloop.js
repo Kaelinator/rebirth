@@ -26,7 +26,7 @@ const configureWebSockets = server => {
 
     ws.on('message', message => {
       console.log(`recieved ${message}`)
-      players[ws.id] = JSON.parse(message)
+      players[ws.id].movement = JSON.parse(message)
     })
 
     ws.on('close', () => {
