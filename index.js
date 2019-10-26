@@ -2,11 +2,9 @@ const express = require('express')
 const WebSocket = require('ws')
 const http = require('http')
 const app = express()
+const path = require("path")
 
-
-app.get('/', (req, res) => {
-  res.send('Testing')
-})
+app.use("/", express.static(path.join(__dirname, "client")));
 
 const server = http.createServer(app)
 
