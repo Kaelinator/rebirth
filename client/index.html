@@ -31,7 +31,8 @@
       font-size: 40px;
     }
 
-    input, button {
+    input,
+    button {
       font-size: 24px;
     }
 
@@ -39,6 +40,10 @@
       color: white;
     }
   </style>
+  <script>
+    const DEBUG = document.location.protocol === 'http:'
+  </script>
+  <script src="dom.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
   <script src="game.js"></script>
   <title>Rebirth</title>
@@ -49,7 +54,7 @@
     <div id="join-container">
       <h2>REBORN</h2>
       <input id="username" type="text" placeholder="Username" />
-      <button>Join</button>
+      <button id="join">Join</button>
     </div>
   </div>
 </body>

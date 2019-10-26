@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-const DEBUG = document.location.protocol === 'http:'
-
 const CONTROLS = [
   {
     keyCode: 65,
