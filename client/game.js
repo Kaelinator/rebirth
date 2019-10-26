@@ -1,26 +1,24 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
-let connection
-let connected = false
+let connection;
+let connected = false;
 
-const DEBUG = document.location.protocol === 'http:'
+const DEBUG = document.location.protocol === "http:";
 
 function preload() {
-
-  const connectionAddress = `ws${DEBUG ? '' : 's'}://${document.location.host}`
-  connection = new WebSocket(connectionAddress)
+  const connectionAddress = `ws${DEBUG ? "" : "s"}://${document.location.host}`;
+  connection = new WebSocket(connectionAddress);
   connection.onopen = event => {
-    connected = true
-  }
+    connected = true;
+  };
 }
 
 function setup() {
-  createCanvas(500, 500)
-  background(51)
+  createCanvas(500, 500);
+  background(51);
 }
 
 function draw() {
-  if (connected)
-    text('Connected', 0, 32)
+  if (connected) text("Connected", 0, 32);
 }
