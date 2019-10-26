@@ -1,5 +1,5 @@
 
-var Vector = require('vector').Vector
+import Vector from '@minogin/vector'
 
 const JUMP_SPEED = 1
 const FALL_SPEED = 10
