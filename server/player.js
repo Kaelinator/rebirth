@@ -1,5 +1,7 @@
 
 var vectors = require('vectors')
+const { CreateProjectile } = require('./projectile')
+
 
 const JUMP_SPEED = 1
 const FALL_SPEED = 10
