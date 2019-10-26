@@ -1,0 +1,19 @@
+{
+  "name": "rebirth",
+  "version": "1.0.0",
+  "description": "2D multiplayer game for the Gayme Jam",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kaelinator/rebirth.git"
+  },
+  "author": "Kael Kirk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Kaelinator/rebirth/issues"
+  },
+  "homepage": "https://github.com/Kaelinator/rebirth#readme"
+}
