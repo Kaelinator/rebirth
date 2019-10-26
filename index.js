@@ -12,4 +12,5 @@ game.configureWebSockets(server)
 
 server.listen(process.env.PORT || 3000, () => {
   console.log(`PORT ${server.address().port} WE'RE LIVE!`)
+  game.startGameLoop()
 })

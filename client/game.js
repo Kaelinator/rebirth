@@ -24,3 +24,8 @@ function draw() {
   if (connected)
     text('Connected', 0, 32)
 }
+
+function mouseMoved() {
+  if (connected)
+    connection.send(JSON.stringify({ x: mouseX, y: mouseY }))
+}
