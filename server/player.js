@@ -1,6 +1,6 @@
 
 var vectors = require('vectors')
-const { CreateProjectile } = require('./projectile')
+// const { CreateProjectile } = require('./projectile')
 
 
 const JUMP_SPEED = 1
@@ -34,14 +34,10 @@ const updatePlayerPos = player => {
   return player
 }
 
-// const shoot = () => {
-  
-// }
-
-
-const createPlayer = () => ({
-  position: [0,0],
-  velocity: [0,0],
+const createPlayer = ({ name }) => ({
+  name,
+  position: [0, 0],
+  velocity: [0, 0],
   curJumpTick: 0,
   usedOneJump: false,
   isGrounded: false,
@@ -52,7 +48,18 @@ const createPlayer = () => ({
   },
 })
 
+const handleInput = player => message => {
+  const parsedMessage = JSON.parse(message)
+  const { type, payload } = parsedMessage
+  switch (type) {
+  case 'movement':
+    player.movement = payload
+    break
+  }
+}
+
 module.exports = {
   updatePlayerPos,
-  createPlayer
+  createPlayer,
+  handleInput
 }

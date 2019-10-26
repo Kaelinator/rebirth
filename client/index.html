@@ -1,19 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <style>
-      body {
-        background: #333;
-        margin: 0;
-        overflow: hidden;
-      }
-    </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
-    <script src="game.js"></script>
-    <title>Rebirth</title>
-  </head>
-  <body></body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <style>
+    body {
+      background: #FFF;
+      /* background: #333; */
+      margin: 0;
+      overflow: hidden;
+      font-family: 'Rockwell';
+      text-align: center;
+    }
+
+    .center-container {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    #join-container {
+      background: #555;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 40px;
+    }
+
+    input,
+    button {
+      font-size: 24px;
+    }
+
+    h2 {
+      color: white;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+  <script>
+    const DEBUG = document.location.protocol === 'http:'
+  </script>
+  <script src="dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.9.0/p5.min.js"></script>
+  <script src="game.js"></script>
+  <title>Rebirth</title>
+</head>
+
+<body>
+  <div class="center-container">
+    <div id="join-container">
+      <h2>REBORN</h2>
+      <input id="username" type="text" placeholder="Username" />
+      <button id="join">Join</button>
+    </div>
+  </div>
+</body>
+
 </html>

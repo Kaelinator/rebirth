@@ -1,7 +1,5 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
-const DEBUG = document.location.protocol === 'http:'
-
 const CONTROLS = [
   {
     keyCode: 65,
@@ -19,7 +17,8 @@ const CONTROLS = [
 
 const connection = {
   socket: null,
-  connected: false
+  connected: false,
+  playing: false
 }
 
 const movement = {
@@ -29,7 +28,7 @@ const movement = {
 }
 
 const environment = {
-  players: {}
+  players: []
 }
 
 function preload() {
@@ -42,7 +41,10 @@ function preload() {
 
   }
   connection.socket.onmessage = ({ data }) => {
-    environment.players = JSON.parse(data)
+    const { type, payload } = JSON.parse(data)
+    if (type !== 'join') return
+    hideLogin()
+    connection.socket.onmessage = handleEnvironmentChange
   }
 }
 
@@ -80,9 +82,21 @@ const handleInput = () => {
 }
 
 const sendInputs = socket => {
-  socket.send(JSON.stringify(movement))
+  socket.send(JSON.stringify({ type: 'movement', payload: movement }))
 }
 
-const drawPlayer = ({position}) => {
+const drawPlayer = ({ position }) => {
   ellipse(position[0], position[1], 10)
+}
+
+const handleEnvironmentChange = ({ data }) => {
+  const { type, payload } = JSON.parse(data)
+  if (type === 'update')
+    environment.players = payload
+}
+
+const joinGame = name => {
+  const { socket, connected } = connection
+  if (!connected) return
+  socket.send(JSON.stringify({ type: 'join', payload: { name } }))
 }

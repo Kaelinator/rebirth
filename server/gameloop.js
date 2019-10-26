@@ -1,8 +1,8 @@
 
 const WebSocket = require('ws')
 const uuid = require('uuid/v4')
-const { createPlayer, updatePlayerPos } = require('./player')
-const { updateProjectilePos } = require('./projectile')
+const { createPlayer, updatePlayerPos, handleInput} = require('./player')
+//const { updateProjectilePos } = require('./projectile')
 
 const data = {
   players: {},
@@ -19,11 +19,18 @@ const configureWebSockets = server => {
   socketServer.on('connection', ws => {
 
     ws.id = uuid()
-    players[ws.id] = createPlayer()
     console.log(`created user: ${ws.id}`)
 
     ws.on('message', message => {
-      players[ws.id].movement = JSON.parse(message)
+      const parsedMessage = JSON.parse(message)
+      const { type, payload } = parsedMessage
+      if (type !== 'join') return
+      players[ws.id] = createPlayer(payload)
+      console.log(`creating player: ${payload.name}`)
+      ws.send(JSON.stringify({ type: 'join', payload: {} }))
+
+      /* only handle action/movement from now on */
+      ws.on('message', handleInput(players[ws.id]))
     })
 
     ws.on('close', () => {
@@ -48,8 +55,8 @@ const startGameLoop = interval => {
   }, interval)
 }
 
-const emitToAll = (socketServer, data) => {
-  const jsonData = JSON.stringify(data)
+const emitToAll = (socketServer, payload) => {
+  const jsonData = JSON.stringify({ type: 'update', payload })
   socketServer.clients.forEach(client => {
     if (client.readyState !== WebSocket.OPEN) return
     client.send(jsonData)
