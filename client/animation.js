@@ -6,6 +6,10 @@ let spritedata
 
 let animation = []
 
+let player
+
+let players = []
+
 function preload() {
   spritedata = loadJSON('./assets/sprites/spritesheet_data/spritesheet.json')
   spritesheet = loadImage('./assets/sprites/spritesheets/spritesheet.png')
@@ -23,9 +27,14 @@ function setup() {
     animation.push(img)
   })
 
+  player = new Sprite(animation, 100, 100, .3)
+
 }
 
 function draw() {
   background(255)
-  image(animation[frameCount % animation.length], 0, 0)
+
+  player.show()
+  player.animate()
+  
 }
