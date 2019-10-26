@@ -24,7 +24,7 @@ let SPRITES = {
         images: []
       },
       'idle': {
-        speed: 1,
+        speed: .05,
         spritedata: null,
         spritesheet: null,
         images: []
@@ -80,12 +80,13 @@ function setup() {
 
  
  
-  playerSprite = new Sprite(SPRITES, 'RedBunner', 100, 100, 'idle')
+  playerSprite = new Sprite(SPRITES, 'RedBunner', 250, 250, 'idle')
 
 }
 
 function draw() {
   background(255)
+  ellipse(300, 300, 10)
 
   playerSprite.show()
   if(keyIsDown(RIGHT_ARROW) || keyIsDown(LEFT_ARROW))

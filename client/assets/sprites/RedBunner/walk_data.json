@@ -1,43 +1,43 @@
 {
 	"frames": {
-		"Player_Red_Idle.png": {
+		"Player_Red_Animation_Walk_1.png": {
 			"frame": {
 				"x": 1,
 				"y": 1,
-				"w": 150,
-				"h": 150
+				"w": 48,
+				"h": 108
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 150,
-				"h": 150
+				"w": 48,
+				"h": 108
 			},
 			"sourceSize": {
-				"w": 150,
-				"h": 150
+				"w": 48,
+				"h": 108
 			}
 		},
-		"unnamed.png": {
+		"Player_Red_Animation_Walk_2.png": {
 			"frame": {
-				"x": 153,
+				"x": 51,
 				"y": 1,
-				"w": 150,
-				"h": 150
+				"w": 48,
+				"h": 108
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 150,
-				"h": 150
+				"w": 48,
+				"h": 108
 			},
 			"sourceSize": {
-				"w": 150,
-				"h": 150
+				"w": 48,
+				"h": 108
 			}
 		}
 	},
@@ -47,8 +47,8 @@
 		"image": "spritesheet.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 304,
-			"h": 152
+			"w": 100,
+			"h": 110
 		},
 		"scale": "1"
 	}

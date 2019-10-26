@@ -3,6 +3,7 @@
 
 
 class Sprite {
+
   constructor(SPRITES, spriteName, x, y, idleAnimationName) {
     //console.log(SPRITES)
     this.x = x
@@ -17,20 +18,21 @@ class Sprite {
     this.currentAnimationName = idleAnimationName
     this.currentAnimation = this.idleAnimation
   }
-
   show() {
     //console.log(SPRITES[this.spriteName].animations['animation1'].images)
     //console.log(this.getFrames('animation1'))
     let index = floor(this.index) % this.currentAnimation.length
     imageMode(CENTER)
 
+    push()
     if(this.flipped){
-      translate(this.currentAnimation[index].width,0)
-      scale(-1.0, 1)
+      scale(-1, 1)
+      translate(-width,0)
     }else{
       scale(1, 1)
     }
     image(this.currentAnimation[index], this.x, this.y, this.currentAnimation[index].width , this.currentAnimation[index].height)
+    pop()
 
     this.update()
   }

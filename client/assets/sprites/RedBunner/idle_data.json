@@ -1,23 +1,43 @@
 {
 	"frames": {
-		"Player_Red_Idle.png": {
+		"idle1.png": {
 			"frame": {
 				"x": 1,
 				"y": 1,
-				"w": 150,
-				"h": 150
+				"w": 45,
+				"h": 108
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 150,
-				"h": 150
+				"w": 45,
+				"h": 108
 			},
 			"sourceSize": {
-				"w": 150,
-				"h": 150
+				"w": 45,
+				"h": 108
+			}
+		},
+		"idle2.png": {
+			"frame": {
+				"x": 48,
+				"y": 1,
+				"w": 45,
+				"h": 108
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 45,
+				"h": 108
+			},
+			"sourceSize": {
+				"w": 45,
+				"h": 108
 			}
 		}
 	},
@@ -27,8 +47,8 @@
 		"image": "spritesheet.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 152,
-			"h": 152
+			"w": 94,
+			"h": 110
 		},
 		"scale": "1"
 	}
