@@ -1,4 +1,4 @@
-var vectors = require('vectors')
+// var vectors = require('vectors')
 
 const CreateBody = position => ({
   positionVector: [position],

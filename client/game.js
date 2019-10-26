@@ -85,14 +85,17 @@ const sendInputs = socket => {
   socket.send(JSON.stringify({ type: 'movement', payload: movement }))
 }
 
-const drawPlayer = ({ position }) => {
-  ellipse(position[0], position[1], 10)
+const drawPlayer = (player) => {
+  // console.log(player.position)
+  // console.log(player.velocity)
+  ellipse(player.position.x, player.position.y, 10)
 }
 
 const handleEnvironmentChange = ({ data }) => {
   const { type, payload } = JSON.parse(data)
   if (type === 'update')
     environment.players = payload
+
 }
 
 const joinGame = name => {
