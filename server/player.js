@@ -32,7 +32,7 @@ const updatePos = player => {
 
 const createPlayer = ({ name }) => ({
   name,
-  position: new Vector(0, 0),
+  position: new Vector(50, 50),
   velocity: new Vector(0, 0),
   curJumpTick: 0,
   usedOneJump: false,

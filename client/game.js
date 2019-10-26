@@ -52,6 +52,7 @@ function setup() {
   createCanvas(window.innerWidth, window.innerHeight)
   noStroke()
   fill(255)
+  textAlign(CENTER)
 }
 
 function draw() {
@@ -85,7 +86,9 @@ const sendInputs = socket => {
   socket.send(JSON.stringify({ type: 'movement', payload: movement }))
 }
 
-const drawPlayer = ({ position }) => {
+const drawPlayer = (player) => {
+  const {name, position} = player
+  text(name, position.x, position.y - 20)
   ellipse(position.x, position.y, 10)
 }
 
