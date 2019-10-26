@@ -6,10 +6,10 @@ const FALL_SPEED = 10
 const RUN_SPEED = 10
 const JUMP_TICK_LIMIT = 1000
 
-const updatePos = player => {
+const updatePlayerPos = player => {
   player.position.add(player.velocity)
   
-  if(player.isJumping && !usedOneJump){
+  if(player.isJumping && !player.usedOneJump){
     if(player.curJumpTick <= JUMP_TICK_LIMIT) {
       player.curJumpTick += 1
       player.velocity.y = -JUMP_SPEED
@@ -23,13 +23,19 @@ const updatePos = player => {
     player.velocity.y = FALL_SPEED
   }
   
-  if(player.isStrafingLeft || player.isStrafingRight && player.isStrafingLeft != player.isStrafingRight ) {
-    player.velocity.x = RUN_SPEED * player.isStrafingLeft ? 1 : -1
+  if(player.movement.isStrafingLeft || player.movement.isStrafingRight && player.movement.isStrafingLeft != player.movement.isStrafingRight ) {
+    player.velocity.x = RUN_SPEED * player.movement.isStrafingLeft ? 1 : -1
   } else {
     player.velocity.x = 0
   }
+
   return player
 }
+
+const shoot = () => {
+  
+}
+
 
 const createPlayer = () => ({
   position: new Vector(0, 0),
@@ -41,11 +47,10 @@ const createPlayer = () => ({
     isStrafingLeft: false,
     isStrafingRight: false,
     isJumping: false
-  }
+  },
 })
 
-
 module.exports = {
-  updatePos,
+  updatePlayerPos,
   createPlayer
 }
