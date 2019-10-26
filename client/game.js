@@ -28,6 +28,10 @@ const movement = {
   isJumping: false
 }
 
+const environment = {
+  players: {}
+}
+
 function preload() {
 
   const connectionAddress = `ws${DEBUG ? '' : 's'}://${document.location.host}`
@@ -35,12 +39,18 @@ function preload() {
 
   connection.socket.onopen = event => {
     connection.connected = true
+
+  }
+  connection.socket.onmessage = ({ data }) => {
+    environment.players = JSON.parse(data)
   }
 }
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight)
   background(51)
+  noStroke()
+  fill(255)
 }
 
 function draw() {
@@ -49,6 +59,8 @@ function draw() {
   text('Connected', 0, 32)
 
   handleInput()
+
+  environment.players.forEach(drawPlayer)
 }
 
 const handleInput = () => {
@@ -68,4 +80,8 @@ const handleInput = () => {
 
 const sendInputs = socket => {
   socket.send(JSON.stringify(movement))
+}
+
+const drawPlayer = ({position}) => {
+  ellipse(position.x, position.y, 10)
 }
