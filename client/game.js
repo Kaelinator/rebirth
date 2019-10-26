@@ -17,7 +17,8 @@ const CONTROLS = [
 
 const connection = {
   socket: null,
-  connected: false
+  connected: false,
+  playing: false
 }
 
 const movement = {
@@ -40,7 +41,10 @@ function preload() {
 
   }
   connection.socket.onmessage = ({ data }) => {
-    environment.players = JSON.parse(data)
+    const { type, payload } = JSON.parse(data)
+    if (type !== 'join') return
+    hideLogin()
+    connection.socket.onmessage = handleEnvironmentChange
   }
 }
 
@@ -78,9 +82,21 @@ const handleInput = () => {
 }
 
 const sendInputs = socket => {
-  socket.send(JSON.stringify({ type: 'movement', data: movement }))
+  socket.send(JSON.stringify({ type: 'movement', payload: movement }))
 }
 
 const drawPlayer = ({ position }) => {
   ellipse(position.x, position.y, 10)
+}
+
+const handleEnvironmentChange = ({ data }) => {
+  const { type, payload } = JSON.parse(data)
+  if (type === 'update')
+    environment.players = payload
+}
+
+const joinGame = name => {
+  const { socket, connected } = connection
+  if (!connected) return
+  socket.send(JSON.stringify({ type: 'join', payload: { name } }))
 }

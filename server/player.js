@@ -46,10 +46,10 @@ const createPlayer = ({ name }) => ({
 
 const handleInput = player => message => {
   const parsedMessage = JSON.parse(message)
-  const { type, data } = parsedMessage
+  const { type, payload } = parsedMessage
   switch (type) {
   case 'movement':
-    player.movement = data
+    player.movement = payload
     break
   }
 }

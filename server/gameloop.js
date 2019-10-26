@@ -20,9 +20,11 @@ const configureWebSockets = server => {
 
     ws.on('message', message => {
       const parsedMessage = JSON.parse(message)
-      const { type, data } = parsedMessage
+      const { type, payload } = parsedMessage
       if (type !== 'join') return
-      players[ws.id] = createPlayer(data)
+      players[ws.id] = createPlayer(payload)
+      console.log(`creating player: ${payload.name}`)
+      ws.send(JSON.stringify({ type: 'join', payload: {} }))
 
       /* only handle action/movement from now on */
       ws.on('message', handleInput(players[ws.id]))
@@ -46,8 +48,8 @@ const startGameLoop = interval => {
   }, interval)
 }
 
-const emitToAll = (socketServer, data) => {
-  const jsonData = JSON.stringify(data)
+const emitToAll = (socketServer, payload) => {
+  const jsonData = JSON.stringify({ type: 'update', payload })
   socketServer.clients.forEach(client => {
     if (client.readyState !== WebSocket.OPEN) return
     client.send(jsonData)

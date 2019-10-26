@@ -1,11 +1,17 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 
 const join = $username => {
-  console.log($username.value)
+  joinGame($username.value)
 }
 
 const onInputEnter = e => {
   if (e.key !== 'Enter') return
   join(e.target)
+}
+
+const hideLogin = () => {
+  document.getElementById('join-container').classList.add('hidden')
 }
 
 document.addEventListener('DOMContentLoaded', () => {
