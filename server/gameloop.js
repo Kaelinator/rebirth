@@ -1,7 +1,7 @@
 
 const WebSocket = require('ws')
 const uuid = require('uuid/v4')
-const { createPlayer, updatePos } = require('./player')
+const { createPlayer } = require('./player')
 
 const data = {
   players: {},
@@ -36,7 +36,7 @@ const startGameLoop = interval => {
   setInterval(() => {
     const updated = Object
       .values(players)
-      .map(updatePos)
+      // .map(updatePos)
 
     emitToAll(socketServer, updated)
   }, interval)
