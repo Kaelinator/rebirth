@@ -9,7 +9,7 @@ const JUMP_TICK_LIMIT = 1000
 const updatePos = player => {
   player.position.add(player.velocity)
   
-  if(player.isJumping){
+  if(player.isJumping && !usedOneJump){
     if(player.curJumpTick <= JUMP_TICK_LIMIT) {
       player.curJumpTick += 1
       player.velocity.y = -JUMP_SPEED
