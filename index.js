@@ -8,6 +8,6 @@ app.use("/", express.static(path.join(__dirname, "client")));
 //   res.send("Testing");
 // });
 
-app.listen(3000, () => {
-  console.log("this is my change");
-});
+app.listen(process.env.PORT || 3000, () => {
+  console.log('this is my change')
+})
