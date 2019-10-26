@@ -1,5 +1,5 @@
 
-import Vector from '@minogin/vector'
+var vectors = require('vectors')
 
 const JUMP_SPEED = 1
 const FALL_SPEED = 10
@@ -7,39 +7,39 @@ const RUN_SPEED = 10
 const JUMP_TICK_LIMIT = 1000
 
 const updatePlayerPos = player => {
-  player.position.add(player.velocity)
+  vectors.add(player.position, player.velocity)
   
   if(player.isJumping && !player.usedOneJump){
     if(player.curJumpTick <= JUMP_TICK_LIMIT) {
       player.curJumpTick += 1
-      player.velocity.y = -JUMP_SPEED
+      player.velocity[1] = -JUMP_SPEED
     } else {
       player.usedOneJump = true
-      player.velocity.y = FALL_SPEED
+      player.velocity[1] = FALL_SPEED
     }
   } else {
     player.usedOneJump = true
     player.curJumpTick = 0
-    player.velocity.y = FALL_SPEED
+    player.velocity[1] = FALL_SPEED
   }
   
   if(player.movement.isStrafingLeft || player.movement.isStrafingRight && player.movement.isStrafingLeft != player.movement.isStrafingRight ) {
-    player.velocity.x = RUN_SPEED * player.movement.isStrafingLeft ? 1 : -1
+    player.velocity[0] = RUN_SPEED * player.movement.isStrafingLeft ? 1 : -1
   } else {
-    player.velocity.x = 0
+    player.velocity[0] = 0
   }
 
   return player
 }
 
-const shoot = () => {
+// const shoot = () => {
   
-}
+// }
 
 
 const createPlayer = () => ({
-  position: new Vector(0, 0),
-  velocity: new Vector(0, 0),
+  position: [0,0],
+  velocity: [0,0],
   curJumpTick: 0,
   usedOneJump: false,
   isGrounded: false,

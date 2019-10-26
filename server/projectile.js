@@ -1,20 +1,20 @@
-import Vector from '@minogin/vector'
+var vectors = require('vectors')
 const defaultVelocity = 3
 
 
 const updateProjectilePos = projectile => {
-  projectile.position.add(projectile.velocity)
+  vectors.add(projectile.position, projectile.velocity)
   return projectile
 }
 
 const resultantVector = (player, clickVector) => {
-  let playerVector = new Vector(player.position.x, player.position.y)
-  let resultantVector = new Vector(clickVector.x - playerVector.x, clickVector.y - playerVector.y)
-  return resultantVector.unit().mul(new Vector(defaultVelocity, defaultVelocity))
+  let playerVector = [player.position.x, player.position[1]]
+  let resultantVector = [clickVector.x - playerVector.x, clickVector[1] - playerVector[1]]
+  return vectors.mult(vectors.normalize(resultantVector, 1),defaultVelocity)
 }
 
 const CreateProjectile = (player, clickVector) => ({
-  position: new Vector(player.position.x, player.position.y),
+  position: [player.position.x, player.position[1]],
   velocity: resultantVector(player, clickVector),
   health: 3,
 })

@@ -84,5 +84,5 @@ const sendInputs = socket => {
 }
 
 const drawPlayer = ({position}) => {
-  ellipse(position.x, position.y, 10)
+  ellipse(position[0], position[1], 10)
 }
