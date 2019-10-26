@@ -19,12 +19,8 @@
   "homepage": "https://github.com/Kaelinator/rebirth#readme",
   "dependencies": {
     "express": "^4.17.1",
-<<<<<<< HEAD
-    "filehound": "^1.17.3",
-=======
     "uuid": "^3.3.3",
     "vector": "0.0.4",
->>>>>>> upstream/master
     "ws": "^7.2.0"
   },
   "devDependencies": {
