@@ -30,7 +30,8 @@ const updatePos = player => {
   return player
 }
 
-const createPlayer = () => ({
+const createPlayer = ({ name }) => ({
+  name,
   position: new Vector(0, 0),
   velocity: new Vector(0, 0),
   curJumpTick: 0,
@@ -43,8 +44,18 @@ const createPlayer = () => ({
   }
 })
 
+const handleInput = player => message => {
+  const parsedMessage = JSON.parse(message)
+  const { type, data } = parsedMessage
+  switch (type) {
+  case 'movement':
+    player.movement = data
+    break
+  }
+}
 
 module.exports = {
   updatePos,
-  createPlayer
+  createPlayer,
+  handleInput
 }

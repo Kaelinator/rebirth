@@ -1,7 +1,7 @@
 
 const WebSocket = require('ws')
 const uuid = require('uuid/v4')
-const { createPlayer, updatePos } = require('./player')
+const { createPlayer, updatePos, handleInput } = require('./player')
 
 const data = {
   players: {},
@@ -16,11 +16,16 @@ const configureWebSockets = server => {
   socketServer.on('connection', ws => {
 
     ws.id = uuid()
-    players[ws.id] = createPlayer()
     console.log(`created user: ${ws.id}`)
 
     ws.on('message', message => {
-      players[ws.id].movement = JSON.parse(message)
+      const parsedMessage = JSON.parse(message)
+      const { type, data } = parsedMessage
+      if (type !== 'join') return
+      players[ws.id] = createPlayer(data)
+
+      /* only handle action/movement from now on */
+      ws.on('message', handleInput(players[ws.id]))
     })
 
     ws.on('close', () => {

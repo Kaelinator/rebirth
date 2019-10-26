@@ -29,7 +29,7 @@ const movement = {
 }
 
 const environment = {
-  players: {}
+  players: []
 }
 
 function preload() {
@@ -80,9 +80,9 @@ const handleInput = () => {
 }
 
 const sendInputs = socket => {
-  socket.send(JSON.stringify(movement))
+  socket.send(JSON.stringify({ type: 'movement', data: movement }))
 }
 
-const drawPlayer = ({position}) => {
+const drawPlayer = ({ position }) => {
   ellipse(position.x, position.y, 10)
 }
