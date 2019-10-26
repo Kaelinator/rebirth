@@ -4,7 +4,8 @@
   "description": "2D multiplayer game for the Gayme Jam",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon ./index.js"
+    "start": "node index.js",
+    "dev": "npx nodemon ./index.js"
   },
   "repository": {
     "type": "git",
