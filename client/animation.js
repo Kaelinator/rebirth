@@ -14,6 +14,22 @@ let SPRITES = {
         images: []
       }
     }  
+  },
+  'RedBunner': {
+    animations: {
+      'walk': {
+        speed: .1,
+        spritedata: null,
+        spritesheet: null,
+        images: []
+      },
+      'idle': {
+        speed: 1,
+        spritedata: null,
+        spritesheet: null,
+        images: []
+      }
+    }  
   }
 }
 
@@ -64,13 +80,20 @@ function setup() {
 
  
  
-  playerSprite = new Sprite(SPRITES, 'Lucy', 100, 100, 'animation1')
+  playerSprite = new Sprite(SPRITES, 'RedBunner', 100, 100, 'idle')
 
 }
 
 function draw() {
   background(255)
+
   playerSprite.show()
+  if(keyIsDown(RIGHT_ARROW) || keyIsDown(LEFT_ARROW))
+    playerSprite.changeAnimation('walk')
+  else 
+    playerSprite.changeAnimation('idle')
+
+  playerSprite.flipSprite(mouseX - playerSprite.x)
 
 }
 

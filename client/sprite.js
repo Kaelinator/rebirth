@@ -9,6 +9,7 @@ class Sprite {
     this.y = y
     this.spriteName = spriteName
     this.index = 0
+    this.flipped = false
 
     //console.log(idleAnimationName)
     this.idleAnimation = this.getFrames(idleAnimationName)
@@ -21,9 +22,31 @@ class Sprite {
     //console.log(SPRITES[this.spriteName].animations['animation1'].images)
     //console.log(this.getFrames('animation1'))
     let index = floor(this.index) % this.currentAnimation.length
-    image(this.currentAnimation[index], this.x, this.y)
+    imageMode(CENTER)
+
+    if(this.flipped){
+      translate(this.currentAnimation[index].width,0)
+      scale(-1.0, 1)
+    }else{
+      scale(1, 1)
+    }
+    image(this.currentAnimation[index], this.x, this.y, this.currentAnimation[index].width , this.currentAnimation[index].height)
+
     this.update()
   }
+
+  flipSprite(flipNumber){
+    if(flipNumber < 0)
+      this.flipped = true
+    else
+      this.flipped = false
+  }
+
+  changeAnimation(newAnimation){
+    this.currentAnimationName = newAnimation
+    this.currentAnimation = this.getFrames(newAnimation)
+  }
+
 
   update(){
     this.index += SPRITES[this.spriteName].animations[this.currentAnimationName].speed
