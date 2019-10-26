@@ -1,34 +1,40 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
+
 class Sprite {
-  constructor(animation, x, y, speed){
+  constructor(SPRITES, spriteName, x, y, idleAnimationName) {
+    //console.log(SPRITES)
     this.x = x
     this.y = y
-
-    this.animation = animation
-    this.len = this.animation.length
-    this.speed = speed
+    this.spriteName = spriteName
     this.index = 0
+
+    //console.log(idleAnimationName)
+    this.idleAnimation = this.getFrames(idleAnimationName)
+    //console.log(this.idleAnimation)
+    this.currentAnimationName = idleAnimationName
+    this.currentAnimation = this.idleAnimation
   }
 
-  show(){
-    let index = floor(this.index) % this.len
-    image(this.animation[index], this.x, this.y)
+  show() {
+    //console.log(SPRITES[this.spriteName].animations['animation1'].images)
+    //console.log(this.getFrames('animation1'))
+    let index = floor(this.index) % this.currentAnimation.length
+    image(this.currentAnimation[index], this.x, this.y)
+    this.update()
   }
 
-  animate(){
-    this.index += this.speed
+  update(){
+    this.index += SPRITES[this.spriteName].animations[this.currentAnimationName].speed
   }
 
-  setPos(x, y){
+  getFrames(animationName){
+    return SPRITES[this.spriteName].animations[animationName].images
+  }
+
+  setPos(x, y) {
     this.x = x
     this.y = y
   }
-
-  movePos(deltaX, deltaY){
-    this.x += deltaX
-    this.y += deltaY
-  }
-
 }

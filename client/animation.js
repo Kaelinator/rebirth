@@ -1,59 +1,76 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 
-const W = 87 
-const A = 65
-const S = 83
-const D = 68
-
-const MOVE_SPEED = 5
-
-let spritesheet
-let spritedata
-
-let animation = []
 
 let player
 
-let players = []
-
-function preload() {
-  spritedata = loadJSON('./assets/sprites/spritesheet_data/spritesheet.json')
-  spritesheet = loadImage('./assets/sprites/spritesheets/spritesheet.png')
+let SPRITES = {
+  'Lucy': {
+    animations: {
+      'animation1': {
+        speed: 1,
+        spritedata: null,
+        spritesheet: null,
+        images: []
+      }
+    }  
+  }
 }
 
-function createAnimation(spritedata){
+function preload(){
+  let spriteKeys = Object.keys(SPRITES)
+  //console.log(spriteKeys)
+  spriteKeys.forEach(spriteKey => {
+    //console.log(spriteValue)
+    let animationKeys = Object.keys(SPRITES[spriteKey].animations)
+    //console.log(animationKeys)
+    animationKeys.forEach(animationKey => {
+      //console.log( SPRITES[spriteKey].animations[animationKey])
+      SPRITES[spriteKey].animations[animationKey].spritedata =  loadJSON(`./assets/sprites/${spriteKey}/${animationKey}_data.json`)
+      SPRITES[spriteKey].animations[animationKey].spritesheet =  loadImage(`./assets/sprites/${spriteKey}/${animationKey}.png`)
 
+    })
+  })
+}
+
+function populateAnimationFrames(){
+  let spriteKeys = Object.keys(SPRITES)
+
+  spriteKeys.forEach(spriteKey => {
+
+    let animationKeys = Object.keys(SPRITES[spriteKey].animations)
+
+    animationKeys.forEach(animationKey => {
+      let spritedata = SPRITES[spriteKey].animations[animationKey].spritedata
+      let spritesheet = SPRITES[spriteKey].animations[animationKey].spritesheet
+      let guymove = Object.values(spritedata.frames)
+
+      SPRITES[spriteKey].animations[animationKey].images = guymove.map(({ frame }) => {
+        const { x, y, w, h } = frame
+        return spritesheet.get(x, y, w, h)
+      })
+
+    })
+
+  })
+  
 }
 
 function setup() {
+  populateAnimationFrames()
+
   createCanvas(500, 500)
   background(255)
 
-  let images = Object.values(spritedata.frames)
-
-  images.forEach(({ frame }) => {
-    const { x, y, w, h } = frame
-    const img = spritesheet.get(x, y, w, h)
-    animation.push(img)
-  })
-
-  player = new Sprite(animation, 100, 100, .3)
+ 
+ 
+  playerSprite = new Sprite(SPRITES, 'Lucy', 100, 100, 'animation1')
 
 }
 
 function draw() {
   background(255)
+  playerSprite.show()
 
-  player.show()
-  player.animate()
-  updatePosition(player)
-}
-
-function updatePosition(player){
-  if(keyIsDown(D))
-    player.movePos(MOVE_SPEED, 0)
-  if(keyIsDown(A))
-    player.movePos(-MOVE_SPEED, 0)
 }
 
