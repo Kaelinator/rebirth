@@ -28,15 +28,20 @@ const updatePos = player => {
   } else {
     player.velocity.x = 0
   }
-    
-}  
+  return player
+}
 
 const createPlayer = () => ({
   position: new Vector(0, 0),
   velocity: new Vector(0, 0),
   curJumpTick: 0,
   usedOneJump: false,
-  isGrounded: false
+  isGrounded: false,
+  movement: {
+    isStrafingLeft: false,
+    isStrafingRight: false,
+    isJumping: false
+  }
 })
 
 
