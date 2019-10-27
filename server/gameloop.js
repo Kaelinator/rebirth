@@ -45,7 +45,7 @@ const startGameLoop = interval => {
   setInterval(() => {
     const updatedPlayerPos = Object
       .values(players)
-      .map(updatePlayerPos)
+      .map(updatePlayerPos())
     emitToAll(socketServer, updatedPlayerPos)
 
     // const updatedProjectilePos = Object
