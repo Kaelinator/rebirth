@@ -14,7 +14,7 @@ const CONTROLS = [
     action: 'isStrafingLeft'
   },
   {
-    keyCode: 32,
+    keyCode: 87,
     action: 'isJumping'
   }
 ]
@@ -76,8 +76,6 @@ function draw() {
 
   background(173, 216, 230)
 
-  text('Connected', 32, 32)
-
   handleInput()
 
   environment.players.forEach(drawPlayer)
@@ -104,6 +102,11 @@ const handleInput = () => {
   if (movement.mouse.x !== mouse.x || movement.mouse.y !== mouse.y) {
     inputChanged = true
     movement.mouse = mouse
+  }
+
+  if (movement.isShooting !== mouseIsPressed) {
+    inputChanged = true
+    movement.isShooting = mouseIsPressed
   }
 
   if (inputChanged)
@@ -139,7 +142,7 @@ const drawBody = (body) => {
   const w = size.width * SCALE
   const h = size.height * SCALE
 
-  rect(x, y, w, h)
+  rect(x, y - h, w, h)
 }
 
 const drawProjectile = (projectile) => {

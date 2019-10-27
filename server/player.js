@@ -6,6 +6,7 @@ const JUMP_SPEED = process.env.JUMP_SPEED || 3
 const FALL_SPEED = process.env.FALL_SPEED || 3.5
 const RUN_SPEED = process.env.RUN_SPEED || 1
 const JUMP_TICK_LIMIT = process.env.JUMP_TICK_LIMIT || 1000
+const SHOOT_COOLDOWN = process.env.SHOOT_COOLDOWN || 300
 
 const players = {}
 
@@ -18,7 +19,19 @@ const update = (bodies, projectiles) => {
     } else if (inBoundsX(players[id], bodies.getAll())) {
       players[id] = updatePlayerPosY(players[id], id, projectiles)
     }
+// const player = players[id]
+//     player.shootTick += 1
+//     if(inBounds(player, bodies.getAll())) {
+//       players[id] = updatePlayerPos(player, id, projectiles)
+//     }
+//     if(inBoundsProjectile(id, player, projectiles.getAll())) {
+//       player.lives--
+//       player.position = new Vector(50, 50)
+//     }
 
+//     if (player.movement.isShooting && player.shootTick > SHOOT_COOLDOWN) {
+//       player.shootTick = 0
+//       projectiles.add(id, player, player.movement.mouse)
     // if(inBounds(players[id], projectiles.getAll())) {
     //   players[id].lives--
     // }
@@ -26,16 +39,6 @@ const update = (bodies, projectiles) => {
 
   return Object.values(players)
 }
-
-// const updateProjectiles = (bodies, projectiles) => {
-//   Object.keys(players).forEach((id) => {
-//     if(inBounds(players[id], projectiles.getAll())) {
-//       players[id].lives--
-//     } 
-//   }
-//   return Object.values(players)
-// }
-
 const inBoundsX = (player, bodies) => {
   let output = true
   bodies.forEach((body) => {
@@ -59,14 +62,34 @@ const inBoundsY = (player, bodies) => {
        (player.position.y + player.size.y <= body.position.y &&
        player.position.y <= body.position.y))) {
       // console.log('Inbounds')
-    } else {
-      output = false
+      output = true
     }
   })
   return output
 }
 
-const checkJump = (player) => {
+const inBoundsProjectile = (id, player, projectiles) => {
+  let output = false
+  projectiles.forEach((projectile) => {
+    if (projectile.fromId === id) return
+    if(((player.position.x + player.size.x >= projectile.position.x + projectile.size.width &&
+       player.position.x >= projectile.position.x + projectile.size.width) ||
+       (player.position.x + player.size.x <= projectile.position.x &&
+       player.position.x <= projectile.position.x)) ||
+       ((player.position.y + player.size.y >= projectile.position.y + projectile.size.height &&
+       player.position.y >= projectile.position.y + projectile.size.height) ||
+       (player.position.y + player.size.y <= projectile.position.y &&
+       player.position.y <= projectile.position.y))) {
+      // console.log('Inbounds')
+      output = true
+    }
+  })
+  return output
+}
+
+const updatePlayerPos = (player, id) => {
+
+  player.position.add(player.velocity)
   if (player.movement.isJumping) {
     if (player.curJumpTick <= JUMP_TICK_LIMIT) {
       player.curJumpTick += 1
@@ -114,12 +137,13 @@ const createPlayer = ({ name }) => ({
   usedOneJump: false,
   isGrounded: false,
   lives: 3,
+  shootTick: 0,
   movement: {
     isStrafingLeft: false,
     isStrafingRight: false,
     isJumping: false,
     isShooting: false,
-    mousePosition: { x: 0, y: 0 }
+    mouse: { x: 0, y: 0 }
   },
 })
 
