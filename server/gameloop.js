@@ -63,7 +63,7 @@ const emitToAll = (socketServer, payload) => {
 
 const addWalls = () => {
   // add all walls
-  // bodies.add
+  bodies.add({x: 0, y: 500}, {width: 1000, height: 50})
 }
 
 module.exports = {
