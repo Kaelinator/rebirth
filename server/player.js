@@ -6,7 +6,7 @@ const JUMP_SPEED = process.env.JUMP_SPEED || 3
 const FALL_SPEED = process.env.FALL_SPEED || 1
 const RUN_SPEED = process.env.RUN_SPEED || 1
 const JUMP_TICK_LIMIT = process.env.JUMP_TICK_LIMIT || 1000
-const SHOOT_COOLDOWN = process.env.SHOOT_COOLDOWN || 100
+const SHOOT_COOLDOWN = process.env.SHOOT_COOLDOWN || 500
 
 const players = {}
 
