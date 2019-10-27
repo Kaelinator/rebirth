@@ -34,7 +34,9 @@ const movement = {
 }
 
 const environment = {
-  players: []
+  players: [],
+  bodies: [],
+  projectiles: []
 }
 
 function preload() {
@@ -65,7 +67,6 @@ function setup() {
   noStroke()
   fill(255)
   textAlign(CENTER)
-
 }
 
 function draw() {
@@ -78,6 +79,8 @@ function draw() {
   handleInput()
 
   environment.players.forEach(drawPlayer)
+  environment.bodies.forEach(drawBody)
+  environment.projectiles.forEach(drawProjectile)
 }
 
 const handleInput = () => {
@@ -95,7 +98,7 @@ const handleInput = () => {
     x: mouseX / SCALE,
     y: mouseY / SCALE
   }
-  
+
   if (movement.mouse.x !== mouse.x || movement.mouse.y !== mouse.y) {
     inputChanged = true
     movement.mouse = mouse
@@ -126,11 +129,33 @@ const drawPlayer = (player) => {
   
 }
 
+const drawBody = (body) => {
+  const { position, size } = body
+
+  const x = position.x * SCALE
+  const y = position.y * SCALE
+  const w = size.width * SCALE
+  const h = size.height * SCALE
+
+  rect(x, y, w, h)
+}
+
+const drawProjectile = (projectile) => {
+  const {position} = projectile
+
+  const x = position.x * SCALE
+  const y = position.y * SCALE
+  
+  ellipse(x, y, 10)
+}
+
 const handleEnvironmentChange = ({ data }) => {
   const { type, payload } = JSON.parse(data)
-  if (type === 'update')
-    environment.players = payload.players
+  if (type !== 'update') return
 
+  environment.players = payload.players
+  environment.bodies = payload.bodies
+  environment.projectiles = payload.projectiles
 }
 
 const joinGame = name => {
