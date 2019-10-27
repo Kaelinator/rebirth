@@ -51,7 +51,7 @@ function preload() {
     const { type, payload } = JSON.parse(data)
     if (type !== 'join') return
     hideLogin()
-    bg_sound.play()
+    bg_sound.loop()
     connection.socket.onmessage = handleEnvironmentChange
   }
 }
