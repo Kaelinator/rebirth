@@ -1,6 +1,7 @@
-var vectors = require('vectors')
+// const vectors = require('vectors')
 const defaultVelocity = 3
 
+const projectiles = {}
 
 const updateProjectilePos = projectile => {
   vectors.add(projectile.position, projectile.velocity)
