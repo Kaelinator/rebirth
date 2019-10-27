@@ -6,7 +6,7 @@ const JUMP_SPEED = process.env.JUMP_SPEED || 3
 const FALL_SPEED = process.env.FALL_SPEED || 3.5
 const RUN_SPEED = process.env.RUN_SPEED || 1
 const JUMP_TICK_LIMIT = process.env.JUMP_TICK_LIMIT || 1000
-const SHOOT_COOLDOWN = process.env.SHOOT_COOLDOWN || 10
+const SHOOT_COOLDOWN = process.env.SHOOT_COOLDOWN || 300
 
 const players = {}
 
@@ -17,7 +17,7 @@ const update = (bodies, projectiles) => {
     if(inBounds(player, bodies.getAll())) {
       players[id] = updatePlayerPos(player, id, projectiles)
     }
-    if(inBounds(player, projectiles.getAll())) {
+    if(inBoundsProjectile(id, player, projectiles.getAll())) {
       player.lives--
       player.position = new Vector(50, 50)
     }
@@ -42,6 +42,25 @@ const inBounds = (player, bodies) => {
        player.position.y >= body.position.y + body.size.height) ||
        (player.position.y + player.size.y <= body.position.y &&
        player.position.y <= body.position.y))) {
+      // console.log('Inbounds')
+      output = true
+    }
+  })
+  return output
+}
+
+const inBoundsProjectile = (id, player, projectiles) => {
+  let output = false
+  projectiles.forEach((projectile) => {
+    if (projectile.fromId === id) return
+    if(((player.position.x + player.size.x >= projectile.position.x + projectile.size.width &&
+       player.position.x >= projectile.position.x + projectile.size.width) ||
+       (player.position.x + player.size.x <= projectile.position.x &&
+       player.position.x <= projectile.position.x)) ||
+       ((player.position.y + player.size.y >= projectile.position.y + projectile.size.height &&
+       player.position.y >= projectile.position.y + projectile.size.height) ||
+       (player.position.y + player.size.y <= projectile.position.y &&
+       player.position.y <= projectile.position.y))) {
       // console.log('Inbounds')
       output = true
     }
