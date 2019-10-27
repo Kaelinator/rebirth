@@ -62,9 +62,9 @@ function setup() {
 function draw() {
   if (!connection.connected) return
 
-  background(51)
+  background(173, 216, 230)
 
-  text('Connected', 0, 32)
+  text('Connected', 32, 32)
 
   handleInput()
 
