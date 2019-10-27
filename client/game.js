@@ -1,5 +1,8 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
+
+const MAP_SIZE = 1000
+
 const CONTROLS = [
   {
     keyCode: 65,
@@ -49,6 +52,7 @@ function preload() {
 }
 
 function setup() {
+  SCALE = window.innerWidth / MAP_SIZE
   createCanvas(window.innerWidth, window.innerHeight)
   noStroke()
   fill(255)
@@ -58,9 +62,9 @@ function setup() {
 function draw() {
   if (!connection.connected) return
 
-  background(51)
+  background(173, 216, 230)
 
-  text('Connected', 0, 32)
+  text('Connected', 32, 32)
 
   handleInput()
 
@@ -88,8 +92,11 @@ const sendInputs = socket => {
 
 const drawPlayer = (player) => {
   const {name, position} = player
-  text(name, position.x, position.y - 20)
-  ellipse(position.x, position.y, 10)
+  
+  const x = position.x * SCALE
+  const y = position.y * SCALE
+  text(name, x, y - 20)
+  ellipse(x, y, 10)
 }
 
 const handleEnvironmentChange = ({ data }) => {

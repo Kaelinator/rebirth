@@ -1,17 +1,15 @@
 
 const Vector = require('vector').Vector
-// const { CreateProjectile } = require('./projectile')
-
 
 const JUMP_SPEED = 1
-const FALL_SPEED = 10
+const FALL_SPEED = 2
 const RUN_SPEED = 10
 const JUMP_TICK_LIMIT = 1000
 
 const updatePlayerPos = player => {
 
   player.position.add(player.velocity)
-
+  
   if (player.isJumping) {
     if (player.curJumpTick <= JUMP_TICK_LIMIT) {
       player.curJumpTick += 1
