@@ -1,6 +1,7 @@
 const Vector = require('vector').Vector
 const uuid = require('uuid/v4')
-const PROJECTILE_VELOCITY = process.env.PROJECTILE_VELOCITY || 2
+
+const PROJECTILE_VELOCITY = process.env.PROJECTILE_VELOCITY || 1
 
 const PROJECTILE_SIZE = process.env.PROJECTILE_SIZE || 10
 const PROJECTILE_LIFESPAN = process.env.PROJECTILE_LIFESPAN || 1000
@@ -12,7 +13,7 @@ const update = () => {
     projectiles[id].life += 1
 
     projectiles[id] = updateProjectilePos(projectiles[id], id, projectiles)
-    
+
     if (projectiles[id].life > PROJECTILE_LIFESPAN)
       delete projectiles[id]
       

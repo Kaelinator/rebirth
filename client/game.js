@@ -59,9 +59,7 @@ function preload() {
   connection.socket.onclose = () => {
     alert('YOU DIED!')
     noLoop()
-    setTimeout(() => {
-      document.location.reload()
-    }, 1000)
+    document.location.reload()
   }
   connection.socket.onmessage = ({ data }) => {
     const { type, payload } = JSON.parse(data)
