@@ -39,6 +39,7 @@ const configureWebSockets = server => {
 }
 
 const startGameLoop = interval => {
+  addWalls()
   const { socketServer } = data
   setInterval(() => {
 
@@ -59,6 +60,11 @@ const emitToAll = (socketServer, payload) => {
     if (client.readyState !== WebSocket.OPEN) return
     client.send(jsonData)
   })
+}
+
+const addWalls = () => {
+  // add all walls
+  // bodies.add
 }
 
 module.exports = {
