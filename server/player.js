@@ -1,14 +1,24 @@
 
 const Vector = require('vector').Vector
-// const { CreateProjectile } = require('./projectile')
-
+const uuid = require('uuid/v4')
+const projectile = require('./projectile')
 
 const JUMP_SPEED = 1
 const FALL_SPEED = 10
 const RUN_SPEED = 10
 const JUMP_TICK_LIMIT = 1000
 
-const updatePlayerPos = player => {
+const players = {}
+
+const update = (projectiles) => {
+  Object.keys(players).forEach((id) => {
+    players[id] = updatePlayerPos(players[id], id, projectiles)
+  })
+
+  return Object.values(players)
+}
+
+const updatePlayerPos = (player, id, projectiles) => {
 
   player.position.add(player.velocity)
 
@@ -30,6 +40,11 @@ const updatePlayerPos = player => {
   } else {
     player.velocity.x = 0
   }
+
+  if (player.isShooting) // TODO
+    projectile.add({ id: uuid(), from: id })
+
+
   return player
 }
 
@@ -44,22 +59,34 @@ const createPlayer = ({ name }) => ({
   movement: {
     isStrafingLeft: false,
     isStrafingRight: false,
-    isJumping: false
+    isJumping: false,
+    isShooting: false,
+    mousePosition: { x: 0, y: 0 }
   },
 })
 
-const handleInput = player => message => {
+const add = (payload, id) => {
+  console.log(`creating player: ${payload.name}`)
+  players[id] = createPlayer(payload)
+}
+
+const remove = id => {
+  delete players[id]
+}
+
+const handleInput = id => message => {
   const parsedMessage = JSON.parse(message)
   const { type, payload } = parsedMessage
   switch (type) {
   case 'movement':
-    player.movement = payload
+    players[id].movement = payload
     break
   }
 }
 
 module.exports = {
-  updatePlayerPos,
-  createPlayer,
+  update,
+  add,
+  remove,
   handleInput
 }

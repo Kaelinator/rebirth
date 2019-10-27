@@ -27,7 +27,9 @@ const connection = {
 const movement = {
   isStrafingLeft: false,
   isStrafingRight: false,
-  isJumping: false
+  isJumping: false,
+  isShooting: false,
+  mousePosition: { x: 0, y: 0 }
 }
 
 const environment = {
@@ -91,8 +93,8 @@ const sendInputs = socket => {
 }
 
 const drawPlayer = (player) => {
-  const {name, position} = player
-  
+  const { name, position } = player
+
   const x = position.x * SCALE
   const y = position.y * SCALE
   text(name, x, y - 20)

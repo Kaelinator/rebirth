@@ -1,6 +1,7 @@
 const Vector = require('vector').Vector
 const defaultVelocity = 3
 
+const projectiles = {}
 
 const updateProjectilePos = projectile => {
   projectile.position.add(projectile.velocity)
