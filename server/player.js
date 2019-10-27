@@ -6,9 +6,10 @@ const FALL_SPEED = 2
 const RUN_SPEED = 10
 const JUMP_TICK_LIMIT = 1000
 
-const updatePos = player => {
-  const { position, velocity } = player
-  player.position = new Vector((position.x + velocity.x) % 1000, (position.y + velocity.y) % 1000)
+const updatePlayerPos = player => {
+
+  player.position.add(player.velocity)
+  
   if (player.isJumping) {
     if (player.curJumpTick <= JUMP_TICK_LIMIT) {
       player.curJumpTick += 1
@@ -41,7 +42,7 @@ const createPlayer = ({ name }) => ({
     isStrafingLeft: false,
     isStrafingRight: false,
     isJumping: false
-  }
+  },
 })
 
 const handleInput = player => message => {
@@ -55,7 +56,7 @@ const handleInput = player => message => {
 }
 
 module.exports = {
-  updatePos,
+  updatePlayerPos,
   createPlayer,
   handleInput
 }

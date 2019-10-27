@@ -103,6 +103,7 @@ const handleEnvironmentChange = ({ data }) => {
   const { type, payload } = JSON.parse(data)
   if (type === 'update')
     environment.players = payload
+
 }
 
 const joinGame = name => {
