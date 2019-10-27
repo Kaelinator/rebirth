@@ -14,9 +14,7 @@ const update = () => {
   return []
 }
 
-const getAll = () => {
-  return bodies
-}
+const getAll = () => Object.values(bodies)
 
 module.exports = {
   update,

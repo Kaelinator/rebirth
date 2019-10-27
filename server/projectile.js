@@ -39,8 +39,11 @@ const createProjectile = (player, clickVector, fromId) => ({
   health: 3,
 })
 
+const getAll = () => Object.values(projectiles)
+
 module.exports = {
   update,
   add, 
   remove,
+  getAll
 }
