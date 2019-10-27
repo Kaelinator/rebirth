@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 
 const MAP_SIZE = 1000
+let bg_sound
 
 const CONTROLS = [
   {
@@ -39,28 +40,35 @@ const environment = {
 }
 
 function preload() {
+  hideLogin()
+  animationPreload()
+  bg_sound = loadSound('./assets/sound/thememp3.mp3')
 
   const connectionAddress = `ws${DEBUG ? '' : 's'}://${document.location.host}`
   connection.socket = new WebSocket(connectionAddress)
 
   connection.socket.onopen = event => {
     connection.connected = true
-
   }
   connection.socket.onmessage = ({ data }) => {
     const { type, payload } = JSON.parse(data)
     if (type !== 'join') return
     hideLogin()
+    bg_sound.loop()
     connection.socket.onmessage = handleEnvironmentChange
   }
 }
 
 function setup() {
+  imageMode(CENTER)
+  textSize(20)
+  populateAnimationFrames()
   SCALE = window.innerWidth / MAP_SIZE
   createCanvas(window.innerWidth, window.innerHeight)
   noStroke()
   fill(255)
   textAlign(CENTER)
+  showLogin()
 }
 
 function draw() {
@@ -111,8 +119,16 @@ const drawPlayer = (player) => {
 
   const x = position.x * SCALE
   const y = position.y * SCALE
-  text(name, x, y - 20)
+
+  fill(50)
+  text(name, x, y - 60)
   ellipse(x, y, 10)
+
+  let walkfile = 'walk' + (movement.mouse.x * SCALE - x < 0 ? 'f' : '')
+  let idlefile = 'idle' + (movement.mouse.x * SCALE - x < 0 ? 'f' : '')
+
+  image(drawPlayerSprite('RedBunner',movement.isStrafingLeft || movement.isStrafingRight ? walkfile : idlefile), x, y)
+  
 }
 
 const drawBody = (body) => {

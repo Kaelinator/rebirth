@@ -1,4 +1,3 @@
-
 const Vector = require('vector').Vector
 const uuid = require('uuid/v4')
 const projectile = require('./projectile')
@@ -12,10 +11,12 @@ const players = {}
 
 const update = (bodies, projectiles) => {
   Object.keys(players).forEach((id) => {
-    if(inBounds(players[id], bodies)) {
+    if(inBounds(players[id], bodies.getAll())) {
       players[id] = updatePlayerPos(players[id], id, projectiles)
     }
-    
+    if(inBounds(players[id], projectiles.getAll())) {
+      players[id].lives--
+    }
   })
 
   return Object.values(players)
@@ -77,6 +78,7 @@ const createPlayer = ({ name }) => ({
   curJumpTick: 0,
   usedOneJump: false,
   isGrounded: false,
+  lives: 3,
   movement: {
     isStrafingLeft: false,
     isStrafingRight: false,
