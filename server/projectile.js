@@ -26,8 +26,8 @@ const resultantVector = (player, clickVector) => {
   return new Vector(defaultVelocity * Math.cos(resultantAngle), defaultVelocity * Math.sin(resultantAngle))
 }
 
-const add = (fromId, playerPos, clickPos) => {
-  projectiles[uuid()] = createProjectile(playerPos, clickPos, fromId)
+const add = (fromId, player, clickPos) => {
+  projectiles[uuid()] = createProjectile(player, clickPos, fromId)
 }
 
 const remove = id => {
