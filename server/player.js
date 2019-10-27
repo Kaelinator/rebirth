@@ -68,17 +68,10 @@ const inBoundsProjectile = (id, player, projectiles) => {
   let output = false
   projectiles.forEach((projectile) => {
     if (projectile.fromId === id) return
-    if (((player.position.x + player.size.x >= projectile.position.x + projectile.size.width &&
-      player.position.x >= projectile.position.x + projectile.size.width) ||
-      (player.position.x + player.size.x <= projectile.position.x &&
-        player.position.x <= projectile.position.x)) ||
-      ((player.position.y + player.size.y >= projectile.position.y + projectile.size.height &&
-        player.position.y >= projectile.position.y + projectile.size.height) ||
-        (player.position.y + player.size.y <= projectile.position.y &&
-          player.position.y <= projectile.position.y))) {
-      // console.log('Inbounds')
+
+    const dist = Math.sqrt((player.position.x - projectile.position.x) ** 2 + (player.position.y - projectile.position.y) ** 2)
+    if (dist < player.size.x / 2 + projectile.size.width / 2)
       output = true
-    }
   })
   return output
 }

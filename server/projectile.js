@@ -24,7 +24,6 @@ const resultantVector = (player, clickVector) => {
   let playerVector = new Vector(player.position.x, player.position.y)
   let resultantVector = new Vector(clickVector.x - playerVector.x, clickVector.y - playerVector.y)
   let resultantAngle = Math.atan2(resultantVector.y, resultantVector.x) //- Math.PI / 2
-  console.log(resultantAngle)
   return new Vector(defaultVelocity * Math.cos(resultantAngle), defaultVelocity * Math.sin(resultantAngle))
 }
 
