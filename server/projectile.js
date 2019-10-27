@@ -1,26 +1,45 @@
-// const vectors = require('vectors')
+const Vector = require('vector').Vector
+const uuid = require('uuid/v4')
 const defaultVelocity = 3
 
 const projectiles = {}
 
+const update = (projectiles) => {
+  Object.keys(projectiles).forEach((id) => {
+    projectiles[id] = updateProjectilePos(projectiles[id], id, projectiles)
+  })
+
+  return Object.values(projectiles)
+}
+
 const updateProjectilePos = projectile => {
-  vectors.add(projectile.position, projectile.velocity)
+  projectile.position.add(projectile.velocity)
   return projectile
 }
 
 const resultantVector = (player, clickVector) => {
-  let playerVector = [player.position.x, player.position[1]]
-  let resultantVector = [clickVector.x - playerVector.x, clickVector[1] - playerVector[1]]
-  return vectors.mult(vectors.normalize(resultantVector, 1),defaultVelocity)
+  let playerVector = new Vector(player.position.x, player.position.y)
+  let resultantVector = new Vector(clickVector.x - playerVector.x, clickVector.y - playerVector.y)
+  let resultantAngle = Math.atan(resultantVector.y, resultantVector.x)
+  return new Vector(defaultVelocity * Math.cos(resultantAngle), defaultVelocity * Math.sin(resultantAngle))
 }
 
-const CreateProjectile = (player, clickVector) => ({
-  position: [player.position.x, player.position[1]],
+const add = (id, playerPos, clickPos) => {
+  projectiles[id] = createProjectile(playerPos, clickPos)
+}
+
+const remove = id => {
+  delete projectiles[id]
+}
+
+const createProjectile = (player, clickVector) => ({
+  position: new Vector(player.position.x, player.position.y),
   velocity: resultantVector(player, clickVector),
   health: 3,
 })
 
 module.exports = {
-  updateProjectilePos,
-  CreateProjectile
+  update,
+  add, 
+  remove,
 }
