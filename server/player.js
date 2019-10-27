@@ -12,17 +12,20 @@ const players = {}
 
 const update = (bodies, projectiles) => {
   Object.keys(players).forEach((id) => {
-    if(inBounds(players[id], bodies)) {
+    if(inBounds(players[id], bodies.getAll())) {
       players[id] = updatePlayerPos(players[id], id, projectiles)
     }
-    
+
+    if(inBounds(players[id], projectiles.getAll())) {
+      players[id] = updatePlayerPos(players[id], id, projectiles)
+    }
   })
 
   return Object.values(players)
 }
 
 const inBounds = (player, bodies) => {
-  bodies.getAll().forEach((body) => {
+  bodies.forEach((body) => {
     if(player.position.x + player.size.width >= body.position.x + body.size.width &&
        player.position.x >= body.position.x + body.size.width &&
        player.position.x + player.size.width <= body.position.x &&
