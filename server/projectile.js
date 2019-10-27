@@ -10,6 +10,7 @@ const update = () => {
   Object.keys(projectiles).forEach((id) => {
     projectiles[id] = updateProjectilePos(projectiles[id], id, projectiles)
   })
+  
 
   return Object.values(projectiles)
 }

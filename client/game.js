@@ -3,6 +3,9 @@
 
 const MAP_SIZE = 1000
 let bg_sound
+let armImg
+let armImgFlipped
+let heart
 
 const CONTROLS = [
   {
@@ -43,6 +46,9 @@ function preload() {
   hideLogin()
   animationPreload()
   bg_sound = loadSound('./assets/sound/thememp3.mp3')
+  armImg = loadImage('./assets/sprites/RedBunner/arm.png')
+  armImgFlipped = loadImage('./assets/sprites/RedBunner/armf.png')
+  heart =  loadImage('./assets/sprites/UI_Heart.png')
 
   const connectionAddress = `ws${DEBUG ? '' : 's'}://${document.location.host}`
   connection.socket = new WebSocket(connectionAddress)
@@ -118,20 +124,36 @@ const sendInputs = socket => {
 }
 
 const drawPlayer = (player) => {
-  const { name, position } = player
+  const { name, position, lives } = player
 
   const x = position.x * SCALE
   const y = position.y * SCALE
 
   fill(50)
-  text(name, x, y - 60)
+  text(name, x, y - 100)
   ellipse(x, y, 10)
 
-  let walkfile = 'walk' + (movement.mouse.x * SCALE - x < 0 ? 'f' : '')
-  let idlefile = 'idle' + (movement.mouse.x * SCALE - x < 0 ? 'f' : '')
+  console.log(lives)
+  //draw health
+  for(let i = 0; i < lives; i++){
+    image(heart, x + i * 27 - 27, y - 75, 25, 25)
+  }
+  
+  //draw player and gun
+  let flipped = movement.mouse.x * SCALE - x < 0
+  let walkfile = 'walk' + (flipped ? 'f' : '')
+  let idlefile = 'idle' + (flipped ? 'f' : '')
+
+  if(!flipped){
+    image(armImg, x + 30, y + 8)
+  }else{
+    image(armImgFlipped, x - 30, y + 8)
+  }
 
   image(drawPlayerSprite('RedBunner',movement.isStrafingLeft || movement.isStrafingRight ? walkfile : idlefile), x, y)
-  
+
+
+
 }
 
 const drawBody = (body) => {
