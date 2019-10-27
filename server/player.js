@@ -42,19 +42,19 @@ const updatePlayerPos = (player, id, projectiles) => {
 
   player.position.add(player.velocity)
 
-  if (player.movement.isJumping) {
-    if (player.curJumpTick <= JUMP_TICK_LIMIT) {
-      player.curJumpTick += 1
-      player.velocity.y = -0.1 * JUMP_SPEED
-    } else {
-      player.usedOneJump = true
-      player.velocity.y = 0.1 * FALL_SPEED
-    }
-  } else {
-    player.usedOneJump = true
-    player.curJumpTick = 0
-    player.velocity.y = 0.1 * FALL_SPEED
-  }
+  // if (player.movement.isJumping) {
+  //   if (player.curJumpTick <= JUMP_TICK_LIMIT) {
+  //     player.curJumpTick += 1
+  //     player.velocity.y = -0.1 * JUMP_SPEED
+  //   } else {
+  //     player.usedOneJump = true
+  //     player.velocity.y = 0.1 * FALL_SPEED
+  //   }
+  // } else {
+  //   player.usedOneJump = true
+  //   player.curJumpTick = 0
+  //   player.velocity.y = 0.1 * FALL_SPEED
+  // }
   if (player.movement.isStrafingLeft || player.movement.isStrafingRight && player.movement.isStrafingLeft != player.movement.isStrafingRight) {
     player.velocity.x = RUN_SPEED * player.movement.isStrafingLeft ? 1 : -1
   } else {
