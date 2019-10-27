@@ -14,9 +14,8 @@ const update = (bodies, projectiles) => {
     if(inBounds(players[id], bodies.getAll())) {
       players[id] = updatePlayerPos(players[id], id, projectiles)
     }
-
     if(inBounds(players[id], projectiles.getAll())) {
-      players[id] = updatePlayerPos(players[id], id, projectiles)
+      players[id].lives--
     }
   })
 
@@ -78,6 +77,7 @@ const createPlayer = ({ name }) => ({
   curJumpTick: 0,
   usedOneJump: false,
   isGrounded: false,
+  lives: 3,
   movement: {
     isStrafingLeft: false,
     isStrafingRight: false,

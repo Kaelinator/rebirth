@@ -14,6 +14,10 @@ const hideLogin = () => {
   document.getElementById('join-container').classList.add('hidden')
 }
 
+const showLogin = () => {
+  document.getElementById('join-container').classList.remove('hidden')
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   
   const $loginButton = document.getElementById('join')
