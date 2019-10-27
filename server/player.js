@@ -1,4 +1,3 @@
-
 const Vector = require('vector').Vector
 const uuid = require('uuid/v4')
 const projectile = require('./projectile')
