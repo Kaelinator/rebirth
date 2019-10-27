@@ -3,37 +3,52 @@ const Vector = require('vector').Vector
 const uuid = require('uuid/v4')
 const projectile = require('./projectile')
 
-const JUMP_SPEED = process.env.JUMP_SPEED || 1
-const FALL_SPEED = process.env.FALL_SPEED || 0
-const RUN_SPEED = process.env.RUN_SPEED || 10
+const JUMP_SPEED = process.env.JUMP_SPEED || 3
+const FALL_SPEED = process.env.FALL_SPEED || 3.5
+const RUN_SPEED = process.env.RUN_SPEED || 1
 const JUMP_TICK_LIMIT = process.env.JUMP_TICK_LIMIT || 1000
 
 const players = {}
 
-const update = (projectiles) => {
+const update = (bodies, projectiles) => {
   Object.keys(players).forEach((id) => {
-    players[id] = updatePlayerPos(players[id], id, projectiles)
+    if(inBounds(players[id], bodies)) {
+      players[id] = updatePlayerPos(players[id], id, projectiles)
+    }
   })
 
   return Object.values(players)
+}
+
+const inBounds = (player, bodies) => {
+  Object.keys(bodies).forEach((body) => {
+    if(player.position.x + player.size.width >= bodies[body].position.x &&
+       player.position.x  >= bodies[body].position.x &&
+       player.position.x < bodies[body].position.x + bodies[body].size.width &&
+       player.position.y < bodies[body].position.y &&
+       player.position.y < bodies[body].position.y + bodies[body].size.height) {
+         return true
+       }
+    return false; 
+  }
 }
 
 const updatePlayerPos = (player, id, projectiles) => {
 
   player.position.add(player.velocity)
 
-  if (player.isJumping) {
+  if (player.movement.isJumping) {
     if (player.curJumpTick <= JUMP_TICK_LIMIT) {
       player.curJumpTick += 1
-      player.velocity.y = -JUMP_SPEED
+      player.velocity.y = -0.1 * JUMP_SPEED
     } else {
       player.usedOneJump = true
-      player.velocity.y = FALL_SPEED
+      player.velocity.y = 0.1 * FALL_SPEED
     }
   } else {
     player.usedOneJump = true
     player.curJumpTick = 0
-    player.velocity.y = FALL_SPEED
+    player.velocity.y = 0.1 * FALL_SPEED
   }
   if (player.movement.isStrafingLeft || player.movement.isStrafingRight && player.movement.isStrafingLeft != player.movement.isStrafingRight) {
     player.velocity.x = RUN_SPEED * player.movement.isStrafingLeft ? 1 : -1
@@ -43,7 +58,6 @@ const updatePlayerPos = (player, id, projectiles) => {
 
   if (player.isShooting) // TODO
     projectile.add({ id: uuid(), from: id })
-
 
   return player
 }
