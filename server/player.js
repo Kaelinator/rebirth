@@ -24,7 +24,7 @@ const update = (bodies, projectiles) => {
     player.shootTick += 1
     if (inBoundsProjectile(id, player, projectiles.getAll())) {
       player.lives--
-      player.position = new Vector(50, 50)
+      // player.position = new Vector(50, 50)
     }
 
     if (player.movement.isShooting && player.shootTick > SHOOT_COOLDOWN) {
