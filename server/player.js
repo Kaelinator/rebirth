@@ -22,15 +22,16 @@ const update = (bodies, projectiles) => {
 
 const inBounds = (player, bodies) => {
   Object.keys(bodies).forEach((body) => {
+    console.log(body)
     if(player.position.x + player.size.width >= bodies[body].position.x &&
-       player.position.x  >= bodies[body].position.x &&
+       player.position.x >= bodies[body].position.x &&
        player.position.x < bodies[body].position.x + bodies[body].size.width &&
        player.position.y < bodies[body].position.y &&
        player.position.y < bodies[body].position.y + bodies[body].size.height) {
-         return true
-       }
-    return false; 
-  }
+      return true
+    }
+    return false
+  })
 }
 
 const updatePlayerPos = (player, id, projectiles) => {
