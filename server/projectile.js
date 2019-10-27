@@ -2,6 +2,8 @@ const Vector = require('vector').Vector
 const uuid = require('uuid/v4')
 const defaultVelocity = 3
 
+const PROJECTILE_SIZE = process.env.PROJECTILE_SIZE || 10
+
 const projectiles = {}
 
 const update = () => {
@@ -36,6 +38,7 @@ const createProjectile = (player, clickVector, fromId) => ({
   fromId,
   position: new Vector(player.position.x, player.position.y),
   velocity: resultantVector(player, clickVector),
+  size: { width: PROJECTILE_SIZE, height: PROJECTILE_SIZE },
   health: 3,
 })
 
@@ -43,7 +46,7 @@ const getAll = () => Object.values(projectiles)
 
 module.exports = {
   update,
-  add, 
+  add,
   remove,
   getAll
 }

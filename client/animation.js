@@ -84,31 +84,6 @@ function populateAnimationFrames(){
   
 }
 
-// function setup() {
-//   populateAnimationFrames()
-
-//   createCanvas(500, 500)
-//   background(255)
- 
-//   //playerSprite = new Sprite(SPRITES, 'RedBunner', 250, 250, 'idle')
-
-// }
-// function draw() {
-//   background(255)
-//   ellipse(300, 300, 10)
-//   //drawPlayerSprite('RedBunner', 'idle', 100, 100)
-
-//   image(drawPlayerSprite('RedBunner','idle'), 50, 100)
-//   // playerSprite.show()
-//   // if(keyIsDown(RIGHT_ARROW) || keyIsDown(LEFT_ARROW))
-//   //   playerSprite.changeAnimation('walk')
-//   // else 
-//   //   playerSprite.changeAnimation('idle')
-
-//   // playerSprite.flipSprite(mouseX - playerSprite.x)
-
-// }
-
 let index = 0
 function drawPlayerSprite(spriteName, spriteAnimation){
   let animation = SPRITES[spriteName].animations[spriteAnimation]

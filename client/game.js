@@ -42,6 +42,7 @@ const environment = {
 }
 
 function preload() {
+  hideLogin()
   animationPreload()
   bg_sound = loadSound('./assets/sound/thememp3.mp3')
   armImg = loadImage('./assets/sprites/RedBunner/arm.png')
@@ -71,6 +72,7 @@ function setup() {
   noStroke()
   fill(255)
   textAlign(CENTER)
+  showLogin()
 }
 
 function draw() {
