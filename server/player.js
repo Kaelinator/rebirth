@@ -42,6 +42,7 @@ const createPlayer = ({ name }) => ({
     isStrafingRight: false,
     isJumping: false
   }
+
 })
 
 const handleInput = player => message => {

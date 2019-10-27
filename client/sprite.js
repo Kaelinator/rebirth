@@ -2,6 +2,9 @@
 /* eslint-disable no-undef */
 
 
+
+
+
 class Sprite {
 
   constructor(SPRITES, spriteName, x, y, idleAnimationName) {

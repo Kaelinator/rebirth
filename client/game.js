@@ -32,6 +32,7 @@ const environment = {
 }
 
 function preload() {
+  animationPreload()
   const connectionAddress = `ws${DEBUG ? '' : 's'}://${document.location.host}`
   connection.socket = new WebSocket(connectionAddress)
 
@@ -48,6 +49,8 @@ function preload() {
 }
 
 function setup() {
+  imageMode(CENTER)
+  populateAnimationFrames()
   createCanvas(window.innerWidth, window.innerHeight)
   noStroke()
   fill(255)
@@ -88,7 +91,12 @@ const sendInputs = socket => {
 const drawPlayer = (player) => {
   const {name, position} = player
   text(name, position.x, position.y - 20)
+
+
   ellipse(position.x, position.y, 10)
+  
+  image(drawPlayerSprite('RedBunner','idle'), position.x, position.y)
+
 }
 
 const handleEnvironmentChange = ({ data }) => {
