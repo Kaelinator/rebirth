@@ -43,8 +43,8 @@ const startGameLoop = interval => {
   setInterval(() => {
 
     const payload = {
-      players: players.update(bodies),
-      bodies: bodies.update(),
+      players: players.update(bodies, projectiles),
+      bodies: bodies.getAll(),
       projectiles: projectiles.update(),
     }
 

@@ -2,25 +2,20 @@
 
 const bodies = {}
 
-const add = () => {
-
+const add = (pos, size) => {
+  bodies.add(createBody(pos, size))
 }
 
-const remove = () => {
-
-}
-
-const update = () => {
-  return []
-}
+const createBody = (pos, s) =>  ({
+  position: {x: pos.x, y: pos.y},
+  size: {width: s.width, height: s.height}
+})
 
 const getAll = () => {
   return bodies
 }
 
 module.exports = {
-  update,
   add,
-  remove,
   getAll
 }
