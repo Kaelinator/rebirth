@@ -1,5 +1,3 @@
-// var vectors = require('vectors')
-
 const CreateBody = (position, size) => ({
   positionVector: [position],
   bodySize: {width: size.x, height: size.y}
