@@ -56,6 +56,13 @@ function preload() {
   connection.socket.onopen = event => {
     connection.connected = true
   }
+  connection.socket.onclose = () => {
+    alert('YOU DIED!')
+    noLoop()
+    setTimeout(() => {
+      document.location.reload()
+    }, 1000)
+  }
   connection.socket.onmessage = ({ data }) => {
     const { type, payload } = JSON.parse(data)
     if (type !== 'join') return

@@ -49,6 +49,15 @@ const startGameLoop = interval => {
       projectiles: projectiles.update(),
     }
 
+    Object.entries(players.players).forEach(([key, player]) => {
+      if (player.lives <= 0) {
+        socketServer.clients.forEach(client => {
+          if (client.readyState !== WebSocket.OPEN) return
+          if (client.id === key) client.close()
+        })
+      }
+    })
+
     emitToAll(socketServer, payload)
   }, interval)
 }

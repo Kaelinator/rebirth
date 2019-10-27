@@ -3,12 +3,19 @@ const uuid = require('uuid/v4')
 const PROJECTILE_VELOCITY = process.env.PROJECTILE_VELOCITY || 2
 
 const PROJECTILE_SIZE = process.env.PROJECTILE_SIZE || 10
+const PROJECTILE_LIFESPAN = process.env.PROJECTILE_LIFESPAN || 1000
 
 const projectiles = {}
 
 const update = () => {
   Object.keys(projectiles).forEach((id) => {
+    projectiles[id].life += 1
+
     projectiles[id] = updateProjectilePos(projectiles[id], id, projectiles)
+    
+    if (projectiles[id].life > PROJECTILE_LIFESPAN)
+      delete projectiles[id]
+      
   })
   
 
@@ -40,7 +47,7 @@ const createProjectile = (player, clickVector, fromId) => ({
   position: new Vector(player.position.x, player.position.y),
   velocity: resultantVector(player, clickVector),
   size: { width: PROJECTILE_SIZE, height: PROJECTILE_SIZE },
-  health: 3,
+  life: 0,
 })
 
 const getAll = () => Object.values(projectiles)

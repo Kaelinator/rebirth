@@ -159,5 +159,6 @@ module.exports = {
   update,
   add,
   remove,
-  handleInput
+  handleInput,
+  players
 }
