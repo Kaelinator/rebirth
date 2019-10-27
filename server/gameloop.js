@@ -45,7 +45,7 @@ const startGameLoop = interval => {
     const payload = {
       players: players.update(bodies, projectiles),
       bodies: bodies.update(),
-      projectiles: projectiles.update(),
+      projectiles: projectiles.update(bodies),
     }
 
     // emitToAll(socketServer, updatedPlayerPos)
