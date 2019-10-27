@@ -5,6 +5,7 @@ const MAP_SIZE = 1000
 let bg_sound
 let armImg
 let armImgFlipped
+let heart
 
 const CONTROLS = [
   {
@@ -47,6 +48,7 @@ function preload() {
   bg_sound = loadSound('./assets/sound/thememp3.mp3')
   armImg = loadImage('./assets/sprites/RedBunner/arm.png')
   armImgFlipped = loadImage('./assets/sprites/RedBunner/armf.png')
+  heart =  loadImage('./assets/sprites/UI_Heart.png')
 
   const connectionAddress = `ws${DEBUG ? '' : 's'}://${document.location.host}`
   connection.socket = new WebSocket(connectionAddress)
@@ -125,10 +127,15 @@ const drawPlayer = (player) => {
   const y = position.y * SCALE
 
   fill(50)
-  text(name, x, y - 60)
+  text(name, x, y - 100)
   ellipse(x, y, 10)
 
-
+  //draw health
+  for(let i = 0; i < 3; i++){
+    image(heart, x + i * 27 - 27, y - 75, 25, 25)
+  }
+  
+  //draw player and gun
   let flipped = movement.mouse.x * SCALE - x < 0
   let walkfile = 'walk' + (flipped ? 'f' : '')
   let idlefile = 'idle' + (flipped ? 'f' : '')
@@ -140,6 +147,9 @@ const drawPlayer = (player) => {
   }
 
   image(drawPlayerSprite('RedBunner',movement.isStrafingLeft || movement.isStrafingRight ? walkfile : idlefile), x, y)
+
+
+
 }
 
 const drawBody = (body) => {
