@@ -94,8 +94,11 @@ const drawPlayer = (player) => {
 
 
   ellipse(position.x, position.y, 10)
-  
-  image(drawPlayerSprite('RedBunner','idle'), position.x, position.y)
+
+  if(movement.isStrafingLeft || movement.isStrafingRight)
+    image(drawPlayerSprite('RedBunner','walk'), position.x, position.y)
+  else
+    image(drawPlayerSprite('RedBunner','idle'), position.x, position.y)
 
 }
 
