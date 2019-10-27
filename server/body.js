@@ -11,9 +11,7 @@ const createBody = (pos, s) =>  ({
   size: {width: s.width, height: s.height}
 })
 
-const getAll = () => {
-  return bodies
-}
+const getAll = () => Object.values(bodies)
 
 module.exports = {
   add,

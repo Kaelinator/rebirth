@@ -3,10 +3,10 @@ const Vector = require('vector').Vector
 const uuid = require('uuid/v4')
 const projectile = require('./projectile')
 
-const JUMP_SPEED = 3
-const FALL_SPEED = 3.5
-const RUN_SPEED = 1
-const JUMP_TICK_LIMIT = 1000
+const JUMP_SPEED = process.env.JUMP_SPEED || 3
+const FALL_SPEED = process.env.FALL_SPEED || 3.5
+const RUN_SPEED = process.env.RUN_SPEED || 1
+const JUMP_TICK_LIMIT = process.env.JUMP_TICK_LIMIT || 1000
 
 const players = {}
 
