@@ -2,6 +2,8 @@
 const WebSocket = require('ws')
 const uuid = require('uuid/v4')
 const players = require('./player')
+const bodies = require('./body')
+const projectiles = require('./projectile')
 //const { updateProjectilePos } = require('./projectile')
 
 const data = {
@@ -39,10 +41,15 @@ const configureWebSockets = server => {
 const startGameLoop = interval => {
   const { socketServer } = data
   setInterval(() => {
-    const updatedPlayers = players.update()
+
+    const payload = {
+      players: players.update(),
+      bodies: bodies.update(),
+      projectiles: projectiles.update(),
+    }
 
     // emitToAll(socketServer, updatedPlayerPos)
-    emitToAll(socketServer, updatedPlayers)
+    emitToAll(socketServer, payload)
   }, interval)
 }
 
