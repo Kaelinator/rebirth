@@ -1,5 +1,5 @@
 
-var Vector = require('vector').Vector
+const Vector = require('vector').Vector
 // const { CreateProjectile } = require('./projectile')
 
 
@@ -36,6 +36,7 @@ const updatePlayerPos = player => {
 const createPlayer = ({ name }) => ({
   name,
   position: new Vector(50, 50),
+  size: new Vector(100, 100),
   velocity: new Vector(0, 0),
   curJumpTick: 0,
   usedOneJump: false,
