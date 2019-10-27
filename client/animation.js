@@ -18,7 +18,7 @@ let SPRITES = {
   'RedBunner': {
     animations: {
       'walk': {
-        speed: .1,
+        speed: .13,
         spritedata: null,
         spritesheet: null,
         images: []

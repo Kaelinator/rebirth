@@ -55,6 +55,7 @@ function preload() {
 
 function setup() {
   imageMode(CENTER)
+  textSize(20)
   populateAnimationFrames()
   SCALE = window.innerWidth / MAP_SIZE
   createCanvas(window.innerWidth, window.innerHeight)
@@ -99,13 +100,24 @@ const drawPlayer = (player) => {
 
   const x = position.x * SCALE
   const y = position.y * SCALE
-  text(name, x, y - 20)
+
+  fill(50)
+  text(name, x, y - 60)
   ellipse(x, y, 10)
 
-  if(movement.isStrafingLeft || movement.isStrafingRight)
-    image(drawPlayerSprite('RedBunner','walk'), position.x, position.y)
-  else
-    image(drawPlayerSprite('RedBunner','idle'), position.x, position.y)
+  console.log(movement.mousePosition.x)
+
+  push()
+  if(mouseX - x < 0){
+    scale(-1, 1)
+    translate(-width,0)
+  }else{
+    scale(1, 1)
+  }
+  image(drawPlayerSprite('RedBunner',movement.isStrafingLeft || movement.isStrafingRight ? 'walk' : 'idle'), x, y)
+  pop()
+    
+
 }
 
 const handleEnvironmentChange = ({ data }) => {
