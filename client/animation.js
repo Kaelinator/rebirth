@@ -28,6 +28,18 @@ let SPRITES = {
         spritedata: null,
         spritesheet: null,
         images: []
+      },
+      'walkf': {
+        speed: .13,
+        spritedata: null,
+        spritesheet: null,
+        images: []
+      },
+      'idlef': {
+        speed: .05,
+        spritedata: null,
+        spritesheet: null,
+        images: []
       }
     }  
   }
