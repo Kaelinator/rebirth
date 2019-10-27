@@ -163,7 +163,7 @@ const drawBody = (body) => {
   const w = size.width * SCALE
   const h = size.height * SCALE
 
-  rect(x, y, w, h)
+  rect(x, y - h, w, h)
 }
 
 const drawProjectile = (projectile) => {

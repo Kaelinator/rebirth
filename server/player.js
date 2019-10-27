@@ -3,7 +3,7 @@ const uuid = require('uuid/v4')
 const projectile = require('./projectile')
 
 const JUMP_SPEED = process.env.JUMP_SPEED || 3
-const FALL_SPEED = process.env.FALL_SPEED || 1
+const FALL_SPEED = process.env.FALL_SPEED || 3.5
 const RUN_SPEED = process.env.RUN_SPEED || 1
 const JUMP_TICK_LIMIT = process.env.JUMP_TICK_LIMIT || 1000
 const SHOOT_COOLDOWN = process.env.SHOOT_COOLDOWN || 500
@@ -22,7 +22,6 @@ const update = (bodies, projectiles) => {
     }
 
     if (player.movement.isShooting && player.shootTick > SHOOT_COOLDOWN) {
-      console.log('shoot!!')
       player.shootTick = 0
       projectiles.add(id, player, player.movement.mouse)
     }
@@ -33,7 +32,7 @@ const update = (bodies, projectiles) => {
 
 const inBounds = (player, bodies) => {
   let output = true
-  bodies.getAll().forEach((body) => {
+  bodies.forEach((body) => {
     if(((player.position.x + player.size.x >= body.position.x + body.size.width &&
        player.position.x >= body.position.x + body.size.width) ||
        (player.position.x + player.size.x <= body.position.x &&
@@ -50,7 +49,7 @@ const inBounds = (player, bodies) => {
   return output
 }
 
-const updatePlayerPos = (player, id, projectiles) => {
+const updatePlayerPos = (player, id) => {
 
   player.position.add(player.velocity)
 
