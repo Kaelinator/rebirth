@@ -1,6 +1,6 @@
 const Vector = require('vector').Vector
 const uuid = require('uuid/v4')
-const defaultVelocity = 3
+const PROJECTILE_VELOCITY = process.env.PROJECTILE_VELOCITY || 2
 
 const PROJECTILE_SIZE = process.env.PROJECTILE_SIZE || 10
 
@@ -24,7 +24,7 @@ const resultantVector = (player, clickVector) => {
   let playerVector = new Vector(player.position.x, player.position.y)
   let resultantVector = new Vector(clickVector.x - playerVector.x, clickVector.y - playerVector.y)
   let resultantAngle = Math.atan2(resultantVector.y, resultantVector.x) //- Math.PI / 2
-  return new Vector(defaultVelocity * Math.cos(resultantAngle), defaultVelocity * Math.sin(resultantAngle))
+  return new Vector(PROJECTILE_VELOCITY * Math.cos(resultantAngle), PROJECTILE_VELOCITY * Math.sin(resultantAngle))
 }
 
 const add = (fromId, player, clickPos) => {
