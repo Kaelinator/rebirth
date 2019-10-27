@@ -29,7 +29,7 @@ const movement = {
   isStrafingRight: false,
   isJumping: false,
   isShooting: false,
-  mousePosition: { x: 0, y: 0 }
+  mouse: { x: 0, y: 0 }
 }
 
 const environment = {
@@ -59,6 +59,7 @@ function setup() {
   noStroke()
   fill(255)
   textAlign(CENTER)
+  frameRate(10)
 }
 
 function draw() {
@@ -83,6 +84,16 @@ const handleInput = () => {
     movement[action] = isKeyDown
     inputChanged = true
   })
+
+  const mouse = {
+    x: mouseX / SCALE,
+    y: mouseY / SCALE
+  }
+  
+  if (movement.mouse.x !== mouse.x || movement.mouse.y !== mouse.y) {
+    inputChanged = true
+    movement.mouse = mouse
+  }
 
   if (inputChanged)
     sendInputs(connection.socket)
