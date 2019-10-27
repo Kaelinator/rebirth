@@ -2,12 +2,9 @@
 const WebSocket = require('ws')
 const uuid = require('uuid/v4')
 const players = require('./player')
-<<<<<<< HEAD
-=======
 const bodies = require('./body')
 const projectiles = require('./projectile')
 //const { updateProjectilePos } = require('./projectile')
->>>>>>> 17274936513786df15d66555f9f6e6ddae22068f
 
 const data = {
   socketServer: null,

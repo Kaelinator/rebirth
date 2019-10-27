@@ -39,7 +39,7 @@ const createProjectile = (player, clickVector) => ({
 })
 
 module.exports = {
-  updateProjectilePos,
+  update,
   add, 
   remove,
 }
