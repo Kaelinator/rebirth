@@ -133,6 +133,7 @@ const drawPlayer = (player) => {
   text(name, x, y - 100)
   ellipse(x, y, 10)
 
+  console.log(lives)
   //draw health
   for(let i = 0; i < lives; i++){
     image(heart, x + i * 27 - 27, y - 75, 25, 25)
