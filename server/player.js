@@ -3,19 +3,28 @@ const uuid = require('uuid/v4')
 const projectile = require('./projectile')
 
 const JUMP_SPEED = process.env.JUMP_SPEED || 3
-const FALL_SPEED = process.env.FALL_SPEED || 3.5
+const FALL_SPEED = process.env.FALL_SPEED || 1
 const RUN_SPEED = process.env.RUN_SPEED || 1
 const JUMP_TICK_LIMIT = process.env.JUMP_TICK_LIMIT || 1000
+const SHOOT_COOLDOWN = process.env.SHOOT_COOLDOWN || 100
 
 const players = {}
 
 const update = (bodies, projectiles) => {
   Object.keys(players).forEach((id) => {
-    if(inBounds(players[id], bodies.getAll())) {
-      players[id] = updatePlayerPos(players[id], id, projectiles)
+    const player = players[id]
+    player.shootTick += 1
+    if(inBounds(player, bodies.getAll())) {
+      players[id] = updatePlayerPos(player, id, projectiles)
     }
-    if(inBounds(players[id], projectiles.getAll())) {
-      players[id].lives--
+    if(inBounds(player, projectiles.getAll())) {
+      player.lives--
+    }
+
+    if (player.movement.isShooting && player.shootTick > SHOOT_COOLDOWN) {
+      console.log('shoot!!')
+      player.shootTick = 0
+      projectiles.add(id, player, player.movement.mouse)
     }
   })
 
@@ -78,12 +87,13 @@ const createPlayer = ({ name }) => ({
   usedOneJump: false,
   isGrounded: false,
   lives: 3,
+  shootTick: 0,
   movement: {
     isStrafingLeft: false,
     isStrafingRight: false,
     isJumping: false,
     isShooting: false,
-    mousePosition: { x: 0, y: 0 }
+    mouse: { x: 0, y: 0 }
   },
 })
 

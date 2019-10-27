@@ -76,8 +76,6 @@ function draw() {
 
   background(173, 216, 230)
 
-  text('Connected', 32, 32)
-
   handleInput()
 
   environment.players.forEach(drawPlayer)
@@ -104,6 +102,11 @@ const handleInput = () => {
   if (movement.mouse.x !== mouse.x || movement.mouse.y !== mouse.y) {
     inputChanged = true
     movement.mouse = mouse
+  }
+
+  if (movement.isShooting !== mouseIsPressed) {
+    inputChanged = true
+    movement.isShooting = mouseIsPressed
   }
 
   if (inputChanged)
