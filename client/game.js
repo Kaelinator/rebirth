@@ -124,7 +124,7 @@ const sendInputs = socket => {
 }
 
 const drawPlayer = (player) => {
-  const { name, position } = player
+  const { name, position, lives } = player
 
   const x = position.x * SCALE
   const y = position.y * SCALE
@@ -134,7 +134,7 @@ const drawPlayer = (player) => {
   ellipse(x, y, 10)
 
   //draw health
-  for(let i = 0; i < 3; i++){
+  for(let i = 0; i < lives; i++){
     image(heart, x + i * 27 - 27, y - 75, 25, 25)
   }
   
