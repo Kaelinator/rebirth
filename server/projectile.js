@@ -4,7 +4,7 @@ const defaultVelocity = 3
 
 const projectiles = {}
 
-const update = (projectiles) => {
+const update = () => {
   Object.keys(projectiles).forEach((id) => {
     projectiles[id] = updateProjectilePos(projectiles[id], id, projectiles)
   })
@@ -24,15 +24,16 @@ const resultantVector = (player, clickVector) => {
   return new Vector(defaultVelocity * Math.cos(resultantAngle), defaultVelocity * Math.sin(resultantAngle))
 }
 
-const add = (id, playerPos, clickPos) => {
-  projectiles[id] = createProjectile(playerPos, clickPos)
+const add = (fromId, playerPos, clickPos) => {
+  projectiles[uuid()] = createProjectile(playerPos, clickPos, fromId)
 }
 
 const remove = id => {
   delete projectiles[id]
 }
 
-const createProjectile = (player, clickVector) => ({
+const createProjectile = (player, clickVector, fromId) => ({
+  fromId,
   position: new Vector(player.position.x, player.position.y),
   velocity: resultantVector(player, clickVector),
   health: 3,

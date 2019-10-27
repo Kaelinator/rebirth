@@ -104,7 +104,7 @@ const drawPlayer = (player) => {
 const handleEnvironmentChange = ({ data }) => {
   const { type, payload } = JSON.parse(data)
   if (type === 'update')
-    environment.players = payload
+    environment.players = payload.players
 
 }
 

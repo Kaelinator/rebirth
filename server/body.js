@@ -14,8 +14,13 @@ const update = () => {
   return []
 }
 
+const getAll = () => {
+  return bodies
+}
+
 module.exports = {
   update,
   add,
-  remove
+  remove,
+  getAll
 }
