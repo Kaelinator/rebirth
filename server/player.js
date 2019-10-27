@@ -3,7 +3,7 @@ const uuid = require('uuid/v4')
 const projectile = require('./projectile')
 
 const JUMP_SPEED = 1
-const FALL_SPEED = 2
+const FALL_SPEED = 10
 const RUN_SPEED = 10
 const JUMP_TICK_LIMIT = 1000
 
@@ -50,6 +50,7 @@ const updatePlayerPos = (player, id, projectiles) => {
 const createPlayer = ({ name }) => ({
   name,
   position: new Vector(50, 50),
+  size: new Vector(100, 100),
   velocity: new Vector(0, 0),
   curJumpTick: 0,
   usedOneJump: false,
