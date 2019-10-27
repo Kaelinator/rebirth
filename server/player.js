@@ -2,23 +2,29 @@ const Vector = require('vector').Vector
 const uuid = require('uuid/v4')
 const projectile = require('./projectile')
 
-const JUMP_SPEED = process.env.JUMP_SPEED || 3
-const FALL_SPEED = process.env.FALL_SPEED || 3.5
-const RUN_SPEED = process.env.RUN_SPEED || 1
+const JUMP_SPEED = process.env.JUMP_SPEED || 5
+const FALL_SPEED = process.env.FALL_SPEED || 2
+const RUN_SPEED = process.env.RUN_SPEED || 0.1
 const JUMP_TICK_LIMIT = process.env.JUMP_TICK_LIMIT || 1000
-const SHOOT_COOLDOWN = process.env.SHOOT_COOLDOWN || 500
+const SHOOT_COOLDOWN = process.env.SHOOT_COOLDOWN || 300
 
 const players = {}
 
 const update = (bodies, projectiles) => {
   Object.keys(players).forEach((id) => {
+    if (inBoundsY(players[id], bodies.getAll())) {
+      players[id] = updatePlayerPosY(players[id], id, projectiles)
+      players[id] = updatePlayerPosX(players[id], id, projectiles)
+    } else if (inBoundsX(players[id], bodies.getAll())) {
+      players[id] = updatePlayerPosY(players[id], id, projectiles)
+    }
+
+    updatePlayerPos(players[id], id)
     const player = players[id]
     player.shootTick += 1
-    if(inBounds(player, bodies.getAll())) {
-      players[id] = updatePlayerPos(player, id, projectiles)
-    }
-    if(inBounds(player, projectiles.getAll())) {
+    if (inBoundsProjectile(id, player, projectiles.getAll())) {
       player.lives--
+      // player.position = new Vector(50, 50)
     }
 
     if (player.movement.isShooting && player.shootTick > SHOOT_COOLDOWN) {
@@ -29,18 +35,13 @@ const update = (bodies, projectiles) => {
 
   return Object.values(players)
 }
-
-const inBounds = (player, bodies) => {
+const inBoundsX = (player, bodies) => {
   let output = true
   bodies.forEach((body) => {
-    if(((player.position.x + player.size.x >= body.position.x + body.size.width &&
-       player.position.x >= body.position.x + body.size.width) ||
-       (player.position.x + player.size.x <= body.position.x &&
-       player.position.x <= body.position.x)) ||
-       ((player.position.y + player.size.y >= body.position.y + body.size.height &&
-       player.position.y >= body.position.y + body.size.height) ||
-       (player.position.y + player.size.y <= body.position.y &&
-       player.position.y <= body.position.y))) {
+    if (((player.position.x + player.size.x >= body.position.x + body.size.width &&
+      player.position.x >= body.position.x + body.size.width) ||
+      (player.position.x + player.size.x <= body.position.x &&
+        player.position.x <= body.position.x))) {
       // console.log('Inbounds')
     } else {
       output = false
@@ -49,10 +50,42 @@ const inBounds = (player, bodies) => {
   return output
 }
 
+const inBoundsY = (player, bodies) => {
+  let output = true
+  bodies.forEach((body) => {
+    if (((player.position.y + player.size.y >= body.position.y + body.size.height &&
+      player.position.y >= body.position.y + body.size.height) ||
+      (player.position.y + player.size.y <= body.position.y &&
+        player.position.y <= body.position.y))) {
+      // console.log('Inbounds')
+      output = true
+    }
+  })
+  return output
+}
+
+const inBoundsProjectile = (id, player, projectiles) => {
+  let output = false
+  projectiles.forEach((projectile) => {
+    if (projectile.fromId === id) return
+    if (((player.position.x + player.size.x >= projectile.position.x + projectile.size.width &&
+      player.position.x >= projectile.position.x + projectile.size.width) ||
+      (player.position.x + player.size.x <= projectile.position.x &&
+        player.position.x <= projectile.position.x)) ||
+      ((player.position.y + player.size.y >= projectile.position.y + projectile.size.height &&
+        player.position.y >= projectile.position.y + projectile.size.height) ||
+        (player.position.y + player.size.y <= projectile.position.y &&
+          player.position.y <= projectile.position.y))) {
+      // console.log('Inbounds')
+      output = true
+    }
+  })
+  return output
+}
+
 const updatePlayerPos = (player, id) => {
 
   player.position.add(player.velocity)
-
   if (player.movement.isJumping) {
     if (player.curJumpTick <= JUMP_TICK_LIMIT) {
       player.curJumpTick += 1
@@ -61,13 +94,26 @@ const updatePlayerPos = (player, id) => {
       player.usedOneJump = true
       player.velocity.y = 0.1 * FALL_SPEED
     }
-  } else {
-    player.usedOneJump = true
-    player.curJumpTick = 0
-    player.velocity.y = 0.1 * FALL_SPEED
   }
+}
+
+const updatePlayerPosY = (player, id, projectiles) => {
+
+  player.position.y += player.velocity.y
+
+  player.usedOneJump = true
+  player.curJumpTick = 0
+  player.velocity.y = 0.1 * FALL_SPEED
+
+  return player
+}
+
+const updatePlayerPosX = (player, id, projectiles) => {
+
+  player.position.x += player.velocity.x
+
   if (player.movement.isStrafingLeft || player.movement.isStrafingRight && player.movement.isStrafingLeft != player.movement.isStrafingRight) {
-    player.velocity.x = RUN_SPEED * player.movement.isStrafingLeft ? 1 : -1
+    player.velocity.x = RUN_SPEED * (player.movement.isStrafingLeft ? 1 : -1)
   } else {
     player.velocity.x = 0
   }

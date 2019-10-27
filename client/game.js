@@ -17,7 +17,7 @@ const CONTROLS = [
     action: 'isStrafingLeft'
   },
   {
-    keyCode: 32,
+    keyCode: 87,
     action: 'isJumping'
   }
 ]
