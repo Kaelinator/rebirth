@@ -22,15 +22,15 @@ const update = (bodies, projectiles) => {
 }
 
 const inBounds = (player, bodies) => {
-  Object.keys(bodies).forEach((body) => {
-    if(player.position.x + player.size.width >= bodies[body].position.x + bodies[body].size.width &&
-       player.position.x >= bodies[body].position.x + bodies[body].size.width &&
-       player.position.x + player.size.width <= bodies[body].position.x &&
-       player.position.x >= bodies[body].position.x &&
-       player.position.y + player.size.width >= bodies[body].position.y + bodies[body].size.width &&
-       player.position.y >= bodies[body].position.y + bodies[body].size.width &&
-       player.position.y + player.size.width <= bodies[body].position.y &&
-       player.position.y >= bodies[body].position.y) {
+  bodies.getAll().forEach((body) => {
+    if(player.position.x + player.size.width >= body.position.x + body.size.width &&
+       player.position.x >= body.position.x + body.size.width &&
+       player.position.x + player.size.width <= body.position.x &&
+       player.position.x >= body.position.x &&
+       player.position.y + player.size.width >= body.position.y + body.size.width &&
+       player.position.y >= body.position.y + body.size.width &&
+       player.position.y + player.size.width <= body.position.y &&
+       player.position.y >= body.position.y) {
       console.log('Inbounds')
     } else {
       return false 
